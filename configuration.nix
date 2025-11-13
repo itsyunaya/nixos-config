@@ -2,7 +2,7 @@
 # your system.  Help is available in the configuration.nix(5) man page
 # and in the NixOS manual (accessible by running ‘nixos-help’).
 
-{ inputs, config, pkgs, lib, ... }:
+{ inputs, config, pkgs, ... }:
 
 let
     username = "ashley";
@@ -26,6 +26,56 @@ in
 
     # Symlink the entire theme folder
     #home.file."config/rmpc/themes".source = ./modules/entertainment/rmpc/themes;
+
+    programs.nvf = {
+      enable = true;
+
+      settings = {
+        vim = {
+          startPlugins = [
+            pkgs.vimPlugins.vimtex
+            pkgs.vimPlugins.transparent-nvim
+          ];
+          
+          languages = {
+            enableTreesitter = true;
+
+            nix = {
+              enable = true;
+              format.enable = true;
+            };
+          };
+
+          lsp = {
+            enable = true;
+
+            servers.nix.enable = true;
+          };
+
+          mini.pairs = {
+            enable = true;
+
+            setupOpts = {
+              modes = { insert = true; command = true; terminal = false; };
+
+              skip_next = "[=[[%w%%%'%[%\"%.%`%$]]=]";
+
+              skip_ts = true;
+
+              skin_unbalanced = true;
+            };
+          };
+
+          statusline.lualine = {
+            enable = true;
+          };
+
+          telescope = {
+            enable = true;
+          };
+        };
+      };
+    };
 
     programs.rmpc = {
       enable = true;
@@ -1371,6 +1421,7 @@ window#waybar {
   whitesur-cursors
   hyprshot
   playerctl
+  xdg-utils
   ];
 
   environment.sessionVariables = {

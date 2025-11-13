@@ -24,9 +24,17 @@
     swww = {
       url = "github:LGFae/swww";
     };
+
+    nvf = {
+      url = "github:NotAShelf/nvf";
+      # You can override the input nixpkgs to follow your system's
+      # instance of nixpkgs. This is safe to do as nvf does not depend
+      # on a binary cache.
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
   };
 
-  outputs = { self, nixpkgs, home-manager, zen-browser, stylix, swww, ... }@inputs: 
+  outputs = { self, nixpkgs, home-manager, zen-browser, stylix, swww, nvf, ... }@inputs: 
     let
       system = "x86_64-linux";
     in {
@@ -43,6 +51,10 @@
 	  {
 	    home-manager.useGlobalPkgs = true;
 	    home-manager.useUserPackages = true;
+
+	    home-manager.users.ashley.imports = [
+	      nvf.homeManagerModules.default
+	    ];
 	  }
 	];
       };
