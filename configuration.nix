@@ -36,6 +36,10 @@ in
             pkgs.vimPlugins.vimtex
             pkgs.vimPlugins.transparent-nvim
           ];
+
+          luaConfigRC.nvimConfigDir = ''
+            vim.o.clipboard = 'unnamedplus' 
+          '';
           
           languages = {
             enableTreesitter = true;
@@ -1333,7 +1337,7 @@ window#waybar {
       inputs.zen-browser.packages."${system}".default
       prismlauncher
       xlsclients
-      #rmpc
+      (import ./modules/util/musicpresence.nix { inherit pkgs; })
     ];
     
     home.stateVersion = "25.05";
@@ -1343,7 +1347,7 @@ window#waybar {
     nerd-fonts.jetbrains-mono
     noto-fonts
     noto-fonts-cjk-sans
-    noto-fonts-emoji
+    noto-fonts-color-emoji
     twemoji-color-font
   ];
 
@@ -1352,6 +1356,9 @@ window#waybar {
   };
 
   programs.zsh.enable = true;
+
+  programs.appimage.enable = true;
+  programs.appimage.binfmt = true;
 
   # Bootloader.
   boot.loader.systemd-boot.enable = true;
@@ -1422,6 +1429,7 @@ window#waybar {
   hyprshot
   playerctl
   xdg-utils
+  wl-clipboard
   ];
 
   environment.sessionVariables = {
@@ -1439,6 +1447,8 @@ window#waybar {
   hardware.graphics = {
     enable = true;
   };
+
+  services.displayManager.lemurs.enable = true;
 
   services.pulseaudio.enable = false;
 
@@ -1467,6 +1477,13 @@ window#waybar {
 
   systemd.user.sockets.pipewire-pulse = {
     enable = true;
+  };
+
+  systemd.user.services.musicpresence = {
+    description = "discord music presence";
+    # this is awful, i hate this, but im stupid and cant come up with a better solution
+    serviceConfig.ExecStart = "${(pkgs.callPackage ./modules/util/musicpresence.nix {})}/bin/musicpresence";
+    wantedBy = [ "default.target" ];
   };
 
   services.xserver.videoDrivers = ["nvidia"];
