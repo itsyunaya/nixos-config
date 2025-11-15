@@ -312,7 +312,7 @@ in
   users.users.ashley = {
     isNormalUser = true;
     description = "ashley";
-    extraGroups = [ "networkmanager" "wheel" "audio" ];
+    extraGroups = [ "networkmanager" "wheel" "audio" "seat" ];
     packages = with pkgs; [];
     shell = pkgs.zsh;
   };
