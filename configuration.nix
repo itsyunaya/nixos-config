@@ -247,6 +247,8 @@ in
       inputs.zen-browser.packages."${system}".default
       prismlauncher
       xlsclients
+      mpdas
+      jetbrains.idea
       (import ./modules/util/musicpresence.nix { inherit pkgs; })
     ];
     
@@ -394,6 +396,15 @@ in
     # this is awful, i hate this, but im stupid and cant come up with a better solution
     serviceConfig.ExecStart = "${(pkgs.callPackage ./modules/util/musicpresence.nix {})}/bin/musicpresence";
     wantedBy = [ "default.target" ];
+  };
+
+  systemd.user.services.mpdas = {
+    description = "mpdas music scrobbler";
+    wantedBy = [ "default.target" ];
+
+    serviceConfig = {
+      ExecStart = "${pkgs.mpdas}/bin/mpdas";
+    };
   };
 
   services.xserver.videoDrivers = ["nvidia"];

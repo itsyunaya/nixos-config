@@ -195,14 +195,29 @@
 
 
 	# Ignore maximize requests from apps. You'll probably like this.
-	windowrule = suppressevent maximize, class:.*
+        windowrule {
+                name = suppress-maximize-events
+                match:class = .*
 
-	# Fix some dragging issues with XWayland
-	windowrule = nofocus,class:^$,title:^$,xwayland:1,floating:1,fullscreen:0,pinned:0
+                suppress_event = maximize
+        }
+
+        windowrule {
+                # Fix some dragging issues with XWayland
+                name = fix-xwayland-drags
+                match:class = ^$
+                match:title = ^$
+                match:xwayland = true
+                match:float = true
+                match:fullscreen = false
+                match:pin = false
+
+                no_focus = true
+        }
 
 	# fix hyprshot black border
-	layerrule = noanim, hyprpicker
-	layerrule = noanim, selection
+        layerrule { noanim = true layer = "hyprpicker" } 
+        layerrule { noanim = true layer = "selection" }
 
 	# fix picture in picture
 	windowrulev2 = float, title:^(Picture-in-Picture)$
