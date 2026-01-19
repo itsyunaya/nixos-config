@@ -6,7 +6,7 @@
     enableZshIntegration = true;
 
     keys = [
-      "github"
+      "id_ed25519"
     ];
   };
 }
