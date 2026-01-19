@@ -6,6 +6,7 @@
 
 let
     username = "ashley";
+    musicpresence = pkgs.callPackage ./modules/util/musicpresence.nix {};
 in
 
 {
@@ -19,7 +20,7 @@ in
   home-manager.useUserPackages = true;
   home-manager.useGlobalPkgs = true;
 
-  home-manager.users.ashley = { pkgs, ... }: {
+  home-manager.users.${username} = { pkgs, ... }: {
 
     # Symlink the config file
     #xdg.configFile."rmpc/config.ron".source = ./modules/entertainment/rmpc/config.ron;
@@ -254,10 +255,11 @@ in
       xlsclients
       mpdas
       jetbrains.idea
+      jetbrains.webstorm
       zenity
       kdePackages.dolphin
       steam
-      (import ./modules/util/musicpresence.nix { inherit pkgs; })
+      musicpresence
     ];
     
     home.stateVersion = "25.05";
@@ -319,7 +321,7 @@ in
   };
 
   # Define a user account. Don't forget to set a password with ‘passwd’.
-  users.users.ashley = {
+  users.users.${username} = {
     isNormalUser = true;
     description = "ashley";
     extraGroups = [ "networkmanager" "wheel" "audio" "seat" ];
@@ -347,6 +349,7 @@ in
   firefox
   whitesur-cursors
   hyprshot
+  hyprpicker
   playerctl
   xdg-utils
   wl-clipboard
@@ -402,12 +405,20 @@ in
     enable = true;
   };
 
-  systemd.user.services.musicpresence = {
-    description = "discord music presence";
-    # this is awful, i hate this, but im stupid and cant come up with a better solution
-    serviceConfig.ExecStart = "${(pkgs.callPackage ./modules/util/musicpresence.nix {})}/bin/musicpresence";
-    wantedBy = [ "default.target" ];
-  };
+        #  systemd.user.services.musicpresence = {
+                #enable = true;
+                #description = "Discord music presence";
+                #wantedBy = [ "default.target" ];
+                #serviceConfig = {
+                #Type = "simple";
+                #After = "graphical-session.target";
+                #ExecStart = "${musicpresence}/bin/musicpresence";
+                #Environment = '' XDG_RUNTIME_DIR=/run/user/%U DBUS_SESSION_BUS_ADDRESS=unix:path=/run/user/%U/bus DISPLAY=:0 QT_QPA_PLATFORM=xcb LD_LIBRARY_PATH=${pkgs.libxcb-cursor}/lib:${pkgs.libxcb}/lib:${pkgs.libGLvnd}/lib:${pkgs.fontconfig}/lib:${pkgs.freetype}/lib QT_PLUGIN_PATH=${pkgs.qt6.qtbase}/lib/qt6/plugins '';
+                #Restart = "on-failure";
+                #RestartSec = "5s";
+                #WorkingDirectory = "%h";
+                #};
+        #};
 
   systemd.user.services.mpdas = {
     description = "mpdas music scrobbler";

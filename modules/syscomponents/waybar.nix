@@ -133,7 +133,7 @@
           };
 
 	  "custom/hyprpicker" = {
-            format = "";
+            format = "󰈋";
             on-click = "hyprpicker -a -f hex";
             on-click-right = "hyprpicker -a -f rgb";
           };
@@ -168,8 +168,9 @@ window#waybar {
   font-weight: normal;
   font-style: normal;
 }
+
 #workspaces button {
-    padding: 0px 5px;
+    padding: 0px 2px;
     border-radius: 16px;
     color: #928374;
 }

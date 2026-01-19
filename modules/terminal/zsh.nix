@@ -9,6 +9,10 @@
 	enable = true;
       };
 
+      shellAliases = {
+        nr = "sudo nixos-rebuild switch --flake /home/ashley/sysflake\\#nixos";
+      };
+
       syntaxHighlighting = {
 	enable = true;
 

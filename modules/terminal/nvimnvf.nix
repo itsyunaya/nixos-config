@@ -6,6 +6,8 @@
 
       settings = {
         vim = {
+
+          treesitter.enable = true;
           startPlugins = [
             pkgs.vimPlugins.vimtex
             pkgs.vimPlugins.transparent-nvim

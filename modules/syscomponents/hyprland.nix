@@ -8,6 +8,7 @@
 	exec-once = [
 	  "waybar"
 	  "swww-daemon"
+          "musicpresence"
 	];
 
         monitor = [
