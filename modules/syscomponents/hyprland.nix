@@ -85,7 +85,7 @@
 	  "$mainMod, C, killactive,"
 	  "$mainMod SHIFT, C, exec, kill -9 $(hyprctl activewindow -j | jq -r '.pid')"
 	  "$mainMod, M, exit,"
-	  "$mainMod, E, exec, $filemanager"
+	  "$mainMod, E, exec, dolphin"
 	  "$mainMod, V, togglefloating,"
 	  "$mainMod, R, exec, $menu"
 	  "$mainMod, P, pseudo,"

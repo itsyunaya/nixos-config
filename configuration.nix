@@ -2,7 +2,7 @@
 # your system.  Help is available in the configuration.nix(5) man page
 # and in the NixOS manual (accessible by running ‘nixos-help’).
 
-{ inputs, config, pkgs, ... }:
+{ inputs, config, pkgs, lib, ... }:
 
 let
     username = "ashley";
@@ -34,7 +34,7 @@ in
     ];
 
     programs.rmpc = {
-      enable = true;
+      enable = false;
 
       config = ''
 (
@@ -195,11 +195,15 @@ in
     };
 
     # Manage some system component themes without stylix
-    stylix.targets = {
-      hyprland.enable = false;
-      kitty.enable = false;
-      waybar.enable = false;
+    stylix = {
+
+      targets = {
+        hyprland.enable = false;
+        kitty.enable = false;
+        waybar.enable = false;
+      };
     };
+
 
     services.swww = {
       enable = true;
@@ -233,9 +237,10 @@ in
     };
 
     qt = {
+      enable = true;
       style = {
 	#name = lib.mkForce "WhiteSur";
-	package = pkgs.whitesur-icon-theme;
+        package = pkgs.whitesur-icon-theme;
       };
     };
 
@@ -249,6 +254,9 @@ in
       xlsclients
       mpdas
       jetbrains.idea
+      zenity
+      kdePackages.dolphin
+      steam
       (import ./modules/util/musicpresence.nix { inherit pkgs; })
     ];
     
@@ -321,7 +329,7 @@ in
 
   stylix = {
     enable = true;
-
+    
     cursor = {
       name = "WhiteSur-cursors";
       package = pkgs.whitesur-cursors;
@@ -342,6 +350,8 @@ in
   playerctl
   xdg-utils
   wl-clipboard
+  rmpc
+  gcc
   ];
 
   environment.sessionVariables = {
@@ -358,6 +368,7 @@ in
 
   hardware.graphics = {
     enable = true;
+    enable32Bit = true;
   };
 
   services.displayManager.lemurs.enable = true;
@@ -411,6 +422,7 @@ in
 
   hardware.nvidia = {
     nvidiaSettings = true;
+    modesetting.enable = true;
     open = true;
     package = config.boot.kernelPackages.nvidiaPackages.stable;
   };
