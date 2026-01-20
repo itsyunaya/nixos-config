@@ -34,6 +34,7 @@ in
       ./modules/imports.nix
     ];
 
+
     programs.rmpc = {
       enable = false;
 
@@ -357,6 +358,7 @@ in
   wl-clipboard
   rmpc
   gcc
+  pinentry-gtk2
   ];
 
   environment.sessionVariables = {
@@ -364,6 +366,12 @@ in
     XCURSOR_SIZE = "24";
     HYPRCURSOR_SIZE = "";
   };
+
+    programs.gnupg.agent = {
+      enable = true;
+      enableSSHSupport = true;
+      pinentryPackage = pkgs.pinentry-gtk2;
+    };
 
   security.pam.services.swaylock = {};
 
@@ -377,6 +385,8 @@ in
     enable = true;
     enable32Bit = true;
   };
+
+  services.pcscd.enable = true;
 
   services.displayManager.lemurs.enable = true;
 
