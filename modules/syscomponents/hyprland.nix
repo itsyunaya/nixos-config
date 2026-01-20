@@ -91,7 +91,7 @@
 	  "$mainMod, R, exec, $menu"
 	  "$mainMod, P, pseudo,"
 	  "$mainMod, J, togglesplit,"
-	  "$mainMod, L, exec, hyprlock"
+	  "$mainMod, L, exec, swaylock"
 	  "$mainMod, F, fullscreen"
 
 	  "$mainMod, left, movefocus, l"

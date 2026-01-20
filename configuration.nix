@@ -259,6 +259,7 @@ in
       zenity
       kdePackages.dolphin
       steam
+      keepassxc
       musicpresence
     ];
     
@@ -350,6 +351,7 @@ in
   whitesur-cursors
   hyprshot
   hyprpicker
+  hyprlock
   playerctl
   xdg-utils
   wl-clipboard
@@ -362,6 +364,8 @@ in
     XCURSOR_SIZE = "24";
     HYPRCURSOR_SIZE = "";
   };
+
+  security.pam.services.swaylock = {};
 
   security.sudo.extraConfig = "
     Defaults pwfeedback

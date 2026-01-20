@@ -11,6 +11,7 @@
     ./syscomponents/anyrun.nix
     ./syscomponents/waybar.nix
     ./syscomponents/hyprland.nix
+    ./syscomponents/swaylock.nix
 
     ./util/keychain.nix
   ];
