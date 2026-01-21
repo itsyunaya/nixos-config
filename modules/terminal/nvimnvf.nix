@@ -5,7 +5,14 @@
       enable = true;
 
       settings = {
+
         vim = {
+options = {
+    tabstop = 4;
+    shiftwidth = 4;
+    softtabstop = 4;
+    expandtab = true;
+};
           diagnostics.enable = true;
           treesitter.enable = true;
           startPlugins = [

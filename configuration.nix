@@ -2,467 +2,467 @@
 # your system.  Help is available in the configuration.nix(5) man page
 # and in the NixOS manual (accessible by running ‘nixos-help’).
 
-{ inputs, config, pkgs, ... }:
+{
+	inputs,
+	config,
+	pkgs,
+	...
+}:
 
 let
-    username = "ashley";
-    musicpresence = pkgs.callPackage ./modules/util/musicpresence.nix {};
+	username = "ashley";
+	musicpresence = pkgs.callPackage ./modules/util/musicpresence.nix { };
 in
 
 {
-  imports = [ 
-      # Include the results of the hardware scan.
-      ./hardware-configuration.nix
-    ];
+	imports = [
+		# Include the results of the hardware scan.
+		./hardware-configuration.nix
+	];
 
-  nix.settings.experimental-features = [ "nix-command" "flakes" ];
+	nix.settings.experimental-features = [
+		"nix-command"
+		"flakes"
+	];
 
-  home-manager.useUserPackages = true;
-  home-manager.useGlobalPkgs = true;
+	home-manager.useUserPackages = true;
+	home-manager.useGlobalPkgs = true;
 
-  home-manager.users.${username} = { pkgs, ... }: {
+	home-manager.users.${username} =
+		{ pkgs, ... }:
+		{
 
-    # Symlink the config file
-    #xdg.configFile."rmpc/config.ron".source = ./modules/entertainment/rmpc/config.ron;
+			# Symlink the config file
+			# im not using declarative rmpc anymore, i just keep this here for reference
+			#xdg.configFile."rmpc/config.ron".source = ./modules/entertainment/rmpc/config.ron;
 
-    # Symlink the entire theme folder
-    #home.file."config/rmpc/themes".source = ./modules/entertainment/rmpc/themes;
+			# this file imports all other modules
+			# its separate cuz i dont wanna clutter my main file
+			imports = [
+				./modules/imports.nix
+			];
 
-    # this file imports all other modules
-    # its separate cuz i dont wanna clutter my main file
-    imports = [
-      ./modules/imports.nix
-    ];
+			# programs.rmpc = {
+			# 	enable = false;
 
+			# 	config = ''
+			# 		(
+			# 				address: "127.0.0.1:6600",
+			# 				//address: "/run/user/1000/mpd/socket",
+			# 				password: None,
+			# 				//theme: "silly",
+			# 				//cache_dir: "/home/ashley/Documents/rmpccache",
+			# 				on_song_change: None,
+			# 				volume_step: 5,
+			# 				max_fps: 30,
+			# 				scrolloff: 0,
+			# 				wrap_navigation: false,
+			# 				enable_mouse: true,
+			# 				enable_config_hot_reload: true,
+			# 				status_update_interval_ms: 1000,
+			# 				rewind_to_start_sec: None,
+			# 				reflect_changes_to_playlist: false,
+			# 				select_current_song_on_change: false,
+			# 				browser_song_sort: [Artist, Title, Track, Disc],
+			# 				directories_sort: SortFormat(group_by_type: true, reverse: false),
+			# 				album_art: (
+			# 						method: Auto,
+			# 						max_size_px: (width: 1200, height: 1200),
+			# 						disabled_protocols: ["http://", "https://"],
+			# 						vertical_align: Center,
+			# 						horizontal_align: Center,
+			# 				),
+			# 				keybinds: (
+			# 						global: {
+			# 								":":       CommandMode,
+			# 								",":       VolumeDown,
+			# 								"s":       Stop,
+			# 								".":       VolumeUp,
+			# 								"<Tab>":   NextTab,
+			# 								"<S-Tab>": PreviousTab,
+			# 								"1":       SwitchToTab("Queue"),
+			# 								"2":       SwitchToTab("Directories"),
+			# 								"3":       SwitchToTab("Artists"),
+			# 								"4":       SwitchToTab("Album Artists"),
+			# 								"5":       SwitchToTab("Albums"),
+			# 								"6":       SwitchToTab("Playlists"),
+			# 								"7":       SwitchToTab("Search"),
+			# 								"q":       Quit,
+			# 								">":       NextTrack,
+			# 								"p":       TogglePause,
+			# 								"<":       PreviousTrack,
+			# 								"f":       SeekForward,
+			# 								"z":       ToggleRepeat,
+			# 								"x":       ToggleRandom,
+			# 								"c":       ToggleConsume,
+			# 								"v":       ToggleSingle,
+			# 								"b":       SeekBack,
+			# 								"~":       ShowHelp,
+			# 								"u":       Update,
+			# 								"U":       Rescan,
+			# 								"I":       ShowCurrentSongInfo,
+			# 								"O":       ShowOutputs,
+			# 								"P":       ShowDecoders,
+			# 								"R":       AddRandom,
+			# 						},
+			# 						navigation: {
+			# 								"k":         Up,
+			# 								"j":         Down,
+			# 								"h":         Left,
+			# 								"l":         Right,
+			# 								"<Up>":      Up,
+			# 								"<Down>":    Down,
+			# 								"<Left>":    Left,
+			# 								"<Right>":   Right,
+			# 								"<C-k>":     PaneUp,
+			# 								"<C-j>":     PaneDown,
+			# 								"<C-h>":     PaneLeft,
+			# 								"<C-l>":     PaneRight,
+			# 								"<C-u>":     UpHalf,
+			# 								"N":         PreviousResult,
+			# 								"a":         Add,
+			# 								"A":         AddAll,
+			# 								"r":         Rename,
+			# 								"n":         NextResult,
+			# 								"g":         Top,
+			# 								"<Space>":   Select,
+			# 								"<C-Space>": InvertSelection,
+			# 								"G":         Bottom,
+			# 								"<CR>":      Confirm,
+			# 								"i":         FocusInput,
+			# 								"J":         MoveDown,
+			# 								"<C-d>":     DownHalf,
+			# 								"/":         EnterSearch,
+			# 								"<C-c>":     Close,
+			# 								"<Esc>":     Close,
+			# 								"K":         MoveUp,
+			# 								"D":         Delete,
+			# 								"B":         ShowInfo,
+			# 						},
+			# 						queue: {
+			# 								"D":       DeleteAll,
+			# 								"<CR>":    Play,
+			# 								"<C-s>":   Save,
+			# 								"a":       AddToPlaylist,
+			# 								"d":       Delete,
+			# 								"C":       JumpToCurrent,
+			# 								"X":       Shuffle,
+			# 						},
+			# 				),
+			# 				search: (
+			# 						case_sensitive: false,
+			# 						mode: Contains,
+			# 						tags: [
+			# 								(value: "any",         label: "Any Tag"),
+			# 								(value: "artist",      label: "Artist"),
+			# 								(value: "album",       label: "Album"),
+			# 								(value: "albumartist", label: "Album Artist"),
+			# 								(value: "title",       label: "Title"),
+			# 								(value: "filename",    label: "Filename"),
+			# 								(value: "genre",       label: "Genre"),
+			# 						],
+			# 				),
+			# 				artists: (
+			# 						album_display_mode: SplitByDate,
+			# 						album_sort_by: Date,
+			# 				),
+			# 				tabs: [
+			# 						(
+			# 								name: "Queue",
+			# 								pane: Split(
+			# 										direction: Horizontal,
+			# 										panes: [(size: "40%", pane: Pane(AlbumArt)), (size: "60%", pane: Pane(Queue))],
+			# 								),
+			# 						),
+			# 						(
+			# 								name: "Directories",
+			# 								pane: Pane(Directories),
+			# 						),
+			# 						(
+			# 								name: "Artists",
+			# 								pane: Pane(Artists),
+			# 						),
+			# 						(
+			# 								name: "Album Artists",
+			# 								pane: Pane(AlbumArtists),
+			# 						),
+			# 						(
+			# 								name: "Albums",
+			# 								pane: Pane(Albums),
+			# 						),
+			# 						(
+			# 								name: "Playlists",
+			# 								pane: Pane(Playlists),
+			# 						),
+			# 						(
+			# 								name: "Search",
+			# 								pane: Pane(Search),
+			# 						),
+			# 				],
+			# 		)
+			# 	'';
+			# };
 
-    programs.rmpc = {
-      enable = false;
+			# Manage some system component themes without stylix
+			stylix = {
 
-      config = ''
-(
-    address: "127.0.0.1:6600",
-    //address: "/run/user/1000/mpd/socket",
-    password: None,
-    //theme: "silly",
-    //cache_dir: "/home/ashley/Documents/rmpccache",
-    on_song_change: None,
-    volume_step: 5,
-    max_fps: 30,
-    scrolloff: 0,
-    wrap_navigation: false,
-    enable_mouse: true,
-    enable_config_hot_reload: true,
-    status_update_interval_ms: 1000,
-    rewind_to_start_sec: None,
-    reflect_changes_to_playlist: false,
-    select_current_song_on_change: false,
-    browser_song_sort: [Artist, Title, Track, Disc],
-    directories_sort: SortFormat(group_by_type: true, reverse: false),
-    album_art: (
-        method: Auto,
-        max_size_px: (width: 1200, height: 1200),
-        disabled_protocols: ["http://", "https://"],
-        vertical_align: Center,
-        horizontal_align: Center,
-    ),
-    keybinds: (
-        global: {
-            ":":       CommandMode,
-            ",":       VolumeDown,
-            "s":       Stop,
-            ".":       VolumeUp,
-            "<Tab>":   NextTab,
-            "<S-Tab>": PreviousTab,
-            "1":       SwitchToTab("Queue"),
-            "2":       SwitchToTab("Directories"),
-            "3":       SwitchToTab("Artists"),
-            "4":       SwitchToTab("Album Artists"),
-            "5":       SwitchToTab("Albums"),
-            "6":       SwitchToTab("Playlists"),
-            "7":       SwitchToTab("Search"),
-            "q":       Quit,
-            ">":       NextTrack,
-            "p":       TogglePause,
-            "<":       PreviousTrack,
-            "f":       SeekForward,
-            "z":       ToggleRepeat,
-            "x":       ToggleRandom,
-            "c":       ToggleConsume,
-            "v":       ToggleSingle,
-            "b":       SeekBack,
-            "~":       ShowHelp,
-            "u":       Update,
-            "U":       Rescan,
-            "I":       ShowCurrentSongInfo,
-            "O":       ShowOutputs,
-            "P":       ShowDecoders,
-            "R":       AddRandom,
-        },
-        navigation: {
-            "k":         Up,
-            "j":         Down,
-            "h":         Left,
-            "l":         Right,
-            "<Up>":      Up,
-            "<Down>":    Down,
-            "<Left>":    Left,
-            "<Right>":   Right,
-            "<C-k>":     PaneUp,
-            "<C-j>":     PaneDown,
-            "<C-h>":     PaneLeft,
-            "<C-l>":     PaneRight,
-            "<C-u>":     UpHalf,
-            "N":         PreviousResult,
-            "a":         Add,
-            "A":         AddAll,
-            "r":         Rename,
-            "n":         NextResult,
-            "g":         Top,
-            "<Space>":   Select,
-            "<C-Space>": InvertSelection,
-            "G":         Bottom,
-            "<CR>":      Confirm,
-            "i":         FocusInput,
-            "J":         MoveDown,
-            "<C-d>":     DownHalf,
-            "/":         EnterSearch,
-            "<C-c>":     Close,
-            "<Esc>":     Close,
-            "K":         MoveUp,
-            "D":         Delete,
-            "B":         ShowInfo,
-        },
-        queue: {
-            "D":       DeleteAll,
-            "<CR>":    Play,
-            "<C-s>":   Save,
-            "a":       AddToPlaylist,
-            "d":       Delete,
-            "C":       JumpToCurrent,
-            "X":       Shuffle,
-        },
-    ),
-    search: (
-        case_sensitive: false,
-        mode: Contains,
-        tags: [
-            (value: "any",         label: "Any Tag"),
-            (value: "artist",      label: "Artist"),
-            (value: "album",       label: "Album"),
-            (value: "albumartist", label: "Album Artist"),
-            (value: "title",       label: "Title"),
-            (value: "filename",    label: "Filename"),
-            (value: "genre",       label: "Genre"),
-        ],
-    ),
-    artists: (
-        album_display_mode: SplitByDate,
-        album_sort_by: Date,
-    ),
-    tabs: [
-        (
-            name: "Queue",
-            pane: Split(
-                direction: Horizontal,
-                panes: [(size: "40%", pane: Pane(AlbumArt)), (size: "60%", pane: Pane(Queue))],
-            ),
-        ),
-        (
-            name: "Directories",
-            pane: Pane(Directories),
-        ),
-        (
-            name: "Artists",
-            pane: Pane(Artists),
-        ),
-        (
-            name: "Album Artists",
-            pane: Pane(AlbumArtists),
-        ),
-        (
-            name: "Albums",
-            pane: Pane(Albums),
-        ),
-        (
-            name: "Playlists",
-            pane: Pane(Playlists),
-        ),
-        (
-            name: "Search",
-            pane: Pane(Search),
-        ),
-    ],
-)
-      '';
-    };
+				targets = {
+					hyprland.enable = false;
+					kitty.enable = false;
+					waybar.enable = false;
+					dunst.enable = false;
+					vscode.enable = false;
+				};
+			};
 
-    # Manage some system component themes without stylix
-    stylix = {
+			services.swww = {
+				enable = true;
+			};
 
-      targets = {
-        hyprland.enable = false;
-        kitty.enable = false;
-        waybar.enable = false;
-        dunst.enable = false;
-      };
-    };
+			services.nextcloud-client = {
+				enable = true;
+			};
 
+			services.mpd = {
+				enable = true;
+				musicDirectory = "/home/ashley/Nextcloud/music";
 
-    services.swww = {
-      enable = true;
-    };
+				extraConfig = ''
+						auto_update "yes"
 
-    services.nextcloud-client = {
-      enable = true;
-    };
+						audio_output {
+									type "pulse"
+									name "mraow"
+								}
+				'';
+			};
 
-    services.mpd = {
-      enable = true;
-      musicDirectory = "/home/ashley/Nextcloud/music";
+			services.mpd-mpris.enable = true;
 
-      extraConfig = ''
-        auto_update "yes"
+			gtk = {
+				iconTheme = {
+					name = "WhiteSur";
+					package = pkgs.whitesur-icon-theme;
+				};
+			};
 
-	audio_output {
-        type "pulse"
-        name "mraow"
-      }
-      '';
-    };
+			qt = {
+				enable = true;
+				style = {
+					#name = lib.mkForce "WhiteSur";
+					package = pkgs.whitesur-icon-theme;
+				};
+			};
 
-    services.mpd-mpris.enable = true;
+			home.packages = with pkgs; [
+				btop
+				vesktop
+				pavucontrol
+				alsa-utils
+				inputs.zen-browser.packages."${stdenv.hostPlatform.system}".default
+				prismlauncher
+				xlsclients
+				mpdas
+				jetbrains.idea
+				jetbrains.webstorm
+				jetbrains.clion
+				zenity
+				kdePackages.dolphin
+				steam
+				keepassxc
+				hyfetch
+				mangohud
+				musicpresence
+			];
 
-    gtk = {
-      iconTheme = {
-	name = "WhiteSur";
-	package = pkgs.whitesur-icon-theme;
-      };
-    };
+			home.stateVersion = "25.05";
+		};
 
-    qt = {
-      enable = true;
-      style = {
-	#name = lib.mkForce "WhiteSur";
-        package = pkgs.whitesur-icon-theme;
-      };
-    };
+	fonts.packages = with pkgs; [
+		nerd-fonts.jetbrains-mono
+		noto-fonts
+		noto-fonts-cjk-sans
+		noto-fonts-color-emoji
+		twemoji-color-font
+	];
 
-    home.packages = with pkgs; [
-      btop
-      vesktop
-      pavucontrol
-      alsa-utils
-      inputs.zen-browser.packages."${stdenv.hostPlatform.system}".default
-      prismlauncher
-      xlsclients
-      mpdas
-      jetbrains.idea
-      jetbrains.webstorm
-      jetbrains.clion
-      zenity
-      kdePackages.dolphin
-      steam
-      keepassxc
-      hyfetch
-      mangohud
-      musicpresence
-    ];
-    
-    home.stateVersion = "25.05";
-  };
+	fonts.fontconfig.defaultFonts = {
+		emoji = [
+			"Twitter Color Emoji"
+			"Noto Color Emoji"
+		];
+	};
 
-  fonts.packages = with pkgs; [
-    nerd-fonts.jetbrains-mono
-    noto-fonts
-    noto-fonts-cjk-sans
-    noto-fonts-color-emoji
-    twemoji-color-font
-  ];
+	programs.zsh.enable = true;
 
-  fonts.fontconfig.defaultFonts = {
-    emoji = [ "Twitter Color Emoji" "Noto Color Emoji" ];
-  };
+	programs.appimage.enable = true;
+	programs.appimage.binfmt = true;
 
-  programs.zsh.enable = true;
+	# Bootloader.
+	boot.loader.systemd-boot.enable = true;
+	boot.loader.efi.canTouchEfiVariables = true;
 
-  programs.appimage.enable = true;
-  programs.appimage.binfmt = true;
+	networking.hostName = "nixos"; # Define your hostname.
+	# networking.wireless.enable = true;  # Enables wireless support via wpa_supplicant.
 
-  # Bootloader.
-  boot.loader.systemd-boot.enable = true;
-  boot.loader.efi.canTouchEfiVariables = true;
+	# Configure network proxy if necessary
+	# networking.proxy.default = "http://user:password@proxy:port/";
+	# networking.proxy.noProxy = "127.0.0.1,localhost,internal.domain";
 
-  networking.hostName = "nixos"; # Define your hostname.
-  # networking.wireless.enable = true;  # Enables wireless support via wpa_supplicant.
+	networking.networkmanager.enable = true;
 
-  # Configure network proxy if necessary
-  # networking.proxy.default = "http://user:password@proxy:port/";
-  # networking.proxy.noProxy = "127.0.0.1,localhost,internal.domain";
+	time.timeZone = "Europe/Berlin";
 
-  # Enable networking
-  networking.networkmanager.enable = true;
+	i18n.defaultLocale = "en_US.UTF-8";
 
-  # Set your time zone.
-  time.timeZone = "Europe/Berlin";
+	i18n.extraLocaleSettings = {
+		LC_ADDRESS = "de_DE.UTF-8";
+		LC_IDENTIFICATION = "de_DE.UTF-8";
+		LC_MEASUREMENT = "de_DE.UTF-8";
+		LC_MONETARY = "de_DE.UTF-8";
+		LC_NAME = "de_DE.UTF-8";
+		LC_NUMERIC = "de_DE.UTF-8";
+		LC_PAPER = "de_DE.UTF-8";
+		LC_TELEPHONE = "de_DE.UTF-8";
+		LC_TIME = "de_DE.UTF-8";
+	};
 
-  # Select internationalisation properties.
-  i18n.defaultLocale = "en_US.UTF-8";
+	services.xserver.xkb = {
+		layout = "us";
+		variant = "";
+	};
 
-  i18n.extraLocaleSettings = {
-    LC_ADDRESS = "de_DE.UTF-8";
-    LC_IDENTIFICATION = "de_DE.UTF-8";
-    LC_MEASUREMENT = "de_DE.UTF-8";
-    LC_MONETARY = "de_DE.UTF-8";
-    LC_NAME = "de_DE.UTF-8";
-    LC_NUMERIC = "de_DE.UTF-8";
-    LC_PAPER = "de_DE.UTF-8";
-    LC_TELEPHONE = "de_DE.UTF-8";
-    LC_TIME = "de_DE.UTF-8";
-  };
+	users.users.${username} = {
+		isNormalUser = true;
+		description = "ashley";
+		extraGroups = [
+			"networkmanager"
+			"wheel"
+			"audio"
+			"seat"
+		];
+		packages = with pkgs; [ ];
+		shell = pkgs.zsh;
+	};
 
-  # Configure keymap in X11
-  services.xserver.xkb = {
-    layout = "us";
-    variant = "";
-  };
+	stylix = {
+		enable = true;
 
-  # Define a user account. Don't forget to set a password with ‘passwd’.
-  users.users.${username} = {
-    isNormalUser = true;
-    description = "ashley";
-    extraGroups = [ "networkmanager" "wheel" "audio" "seat" ];
-    packages = with pkgs; [];
-    shell = pkgs.zsh;
-  };
+		cursor = {
+			name = "WhiteSur-cursors";
+			package = pkgs.whitesur-cursors;
+			size = 24;
+		};
 
-  stylix = {
-    enable = true;
-    
-    cursor = {
-      name = "WhiteSur-cursors";
-      package = pkgs.whitesur-cursors;
-      size = 24;
-    };
+		base16Scheme = "${pkgs.base16-schemes}/share/themes/catppuccin-macchiato.yaml";
+	};
 
-    base16Scheme = "${pkgs.base16-schemes}/share/themes/catppuccin-macchiato.yaml";
-  };
+	nixpkgs.config.allowUnfree = true;
 
-  nixpkgs.config.allowUnfree = true;
+	# List packages installed in system profile. To search, run:
+	# $ nix search wget
+	environment.systemPackages = with pkgs; [
+		firefox
+		whitesur-cursors
+		hyprshot
+		hyprpicker
+		hyprlock
+		playerctl
+		xdg-utils
+		wl-clipboard
+		rmpc
+		gcc
+		pinentry-qt
+		libnotify
+		nixfmt
+	];
 
-  # List packages installed in system profile. To search, run:
-  # $ nix search wget
-  environment.systemPackages = with pkgs; [
-  firefox
-  whitesur-cursors
-  hyprshot
-  hyprpicker
-  hyprlock
-  playerctl
-  xdg-utils
-  wl-clipboard
-  rmpc
-  gcc
-  pinentry-qt
-  libnotify
-  ];
+	environment.sessionVariables = {
+		NIXOS_OZONE_WL = "1";
+		XCURSOR_SIZE = "24";
+		HYPRCURSOR_SIZE = "";
+	};
 
-  environment.sessionVariables = {
-    NIXOS_OZONE_WL = "1";
-    XCURSOR_SIZE = "24";
-    HYPRCURSOR_SIZE = "";
-  };
+	programs.gnupg.agent = {
+		enable = true;
+		enableSSHSupport = true;
+		pinentryPackage = pkgs.pinentry-gtk2;
+	};
 
-    programs.gnupg.agent = {
-      enable = true;
-      enableSSHSupport = true;
-      pinentryPackage = pkgs.pinentry-gtk2;
-    };
+	security.pam.services.swaylock = { };
 
-  security.pam.services.swaylock = {};
+	# enable the little stars shown when typing in my password (useful because my keyboard is kinda broken :/)
+	security.sudo.extraConfig = "
+		Defaults pwfeedback
+	";
 
-  security.sudo.extraConfig = "
-    Defaults pwfeedback
-  ";
+	security.rtkit.enable = true;
 
-  security.rtkit.enable = true;
+	hardware.graphics = {
+		enable = true;
+		enable32Bit = true;
+	};
 
-  hardware.graphics = {
-    enable = true;
-    enable32Bit = true;
-  };
+	services.pcscd.enable = true;
 
-  services.pcscd.enable = true;
+	services.displayManager.lemurs.enable = true;
 
-  services.displayManager.lemurs.enable = true;
+	services.pulseaudio.enable = false;
 
-  services.pulseaudio.enable = false;
+	services.pipewire = {
+		enable = true;
+		alsa.enable = true;
+		alsa.support32Bit = true;
+		pulse.enable = true;
+		jack.enable = true;
+		wireplumber.enable = true;
+	};
 
-  services.pipewire = {
-    enable = true;
-    alsa.enable = true;
-    alsa.support32Bit = true;
-    pulse.enable = true;
-    jack.enable = true;
-    wireplumber.enable = true;
-  };
+	xdg.portal = {
+		enable = true;
+		extraPortals = [
+			pkgs.xdg-desktop-portal-hyprland
+			pkgs.xdg-desktop-portal-gtk
+		];
+		config.common.default = "*";
+	};
 
-  xdg.portal = {
-    enable = true;
-    extraPortals = [ pkgs.xdg-desktop-portal-hyprland pkgs.xdg-desktop-portal-gtk ];
-    config.common.default = "*";
-  };
+	systemd.user.services.pipewire-pulse = {
+		enable = true;
+	};
 
-  systemd.user.services.pipewire-pulse = {
-    enable = true;
-  };
+	systemd.user.sockets.pipewire = {
+		enable = true;
+	};
 
-  systemd.user.sockets.pipewire = {
-    enable = true;
-  };
+	systemd.user.sockets.pipewire-pulse = {
+		enable = true;
+	};
 
-  systemd.user.sockets.pipewire-pulse = {
-    enable = true;
-  };
+	systemd.user.services.mpdas = {
+		description = "mpdas music scrobbler";
+		wantedBy = [ "default.target" ];
 
-        #  systemd.user.services.musicpresence = {
-                #enable = true;
-                #description = "Discord music presence";
-                #wantedBy = [ "default.target" ];
-                #serviceConfig = {
-                #Type = "simple";
-                #After = "graphical-session.target";
-                #ExecStart = "${musicpresence}/bin/musicpresence";
-                #Environment = '' XDG_RUNTIME_DIR=/run/user/%U DBUS_SESSION_BUS_ADDRESS=unix:path=/run/user/%U/bus DISPLAY=:0 QT_QPA_PLATFORM=xcb LD_LIBRARY_PATH=${pkgs.libxcb-cursor}/lib:${pkgs.libxcb}/lib:${pkgs.libGLvnd}/lib:${pkgs.fontconfig}/lib:${pkgs.freetype}/lib QT_PLUGIN_PATH=${pkgs.qt6.qtbase}/lib/qt6/plugins '';
-                #Restart = "on-failure";
-                #RestartSec = "5s";
-                #WorkingDirectory = "%h";
-                #};
-        #};
+		serviceConfig = {
+			ExecStart = "${pkgs.mpdas}/bin/mpdas";
+		};
+	};
 
-  systemd.user.services.mpdas = {
-    description = "mpdas music scrobbler";
-    wantedBy = [ "default.target" ];
+	services.xserver.videoDrivers = [ "nvidia" ];
 
-    serviceConfig = {
-      ExecStart = "${pkgs.mpdas}/bin/mpdas";
-    };
-  };
+	hardware.nvidia = {
+		nvidiaSettings = true;
+		modesetting.enable = true;
+		open = true;
+		package = config.boot.kernelPackages.nvidiaPackages.stable;
+	};
 
-  services.xserver.videoDrivers = ["nvidia"];
-
-  hardware.nvidia = {
-    nvidiaSettings = true;
-    modesetting.enable = true;
-    open = true;
-    package = config.boot.kernelPackages.nvidiaPackages.stable;
-  };
-
-  # This value determines the NixOS release from which the default
-  # settings for stateful data, like file locations and database versions
-  # on your system were taken. It‘s perfectly fine and recommended to leave
-  # this value at the release version of the first install of this system.
-  # Before changing this value read the documentation for this option
-  # (e.g. man configuration.nix or on https://nixos.org/nixos/options.html).
-  system.stateVersion = "25.05"; # Did you read the comment?
+	# This value determines the NixOS release from which the default
+	# settings for stateful data, like file locations and database versions
+	# on your system were taken. It‘s perfectly fine and recommended to leave
+	# this value at the release version of the first install of this system.
+	# Before changing this value read the documentation for this option
+	# (e.g. man configuration.nix or on https://nixos.org/nixos/options.html).
+	system.stateVersion = "25.05"; # Did you read the comment?
 
 }
