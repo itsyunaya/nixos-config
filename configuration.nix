@@ -2,7 +2,7 @@
 # your system.  Help is available in the configuration.nix(5) man page
 # and in the NixOS manual (accessible by running ‘nixos-help’).
 
-{ inputs, config, pkgs, lib, ... }:
+{ inputs, config, pkgs, ... }:
 
 let
     username = "ashley";
@@ -203,6 +203,7 @@ in
         hyprland.enable = false;
         kitty.enable = false;
         waybar.enable = false;
+        dunst.enable = false;
       };
     };
 
@@ -251,16 +252,19 @@ in
       vesktop
       pavucontrol
       alsa-utils
-      inputs.zen-browser.packages."${system}".default
+      inputs.zen-browser.packages."${stdenv.hostPlatform.system}".default
       prismlauncher
       xlsclients
       mpdas
       jetbrains.idea
       jetbrains.webstorm
+      jetbrains.clion
       zenity
       kdePackages.dolphin
       steam
       keepassxc
+      hyfetch
+      mangohud
       musicpresence
     ];
     
@@ -358,7 +362,8 @@ in
   wl-clipboard
   rmpc
   gcc
-  pinentry-gtk2
+  pinentry-qt
+  libnotify
   ];
 
   environment.sessionVariables = {

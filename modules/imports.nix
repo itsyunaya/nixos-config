@@ -12,6 +12,7 @@
     ./syscomponents/waybar.nix
     ./syscomponents/hyprland.nix
     ./syscomponents/swaylock.nix
+    ./syscomponents/dunst.nix
 
     ./util/keychain.nix
   ];

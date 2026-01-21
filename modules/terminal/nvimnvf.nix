@@ -6,7 +6,7 @@
 
       settings = {
         vim = {
-
+          diagnostics.enable = true;
           treesitter.enable = true;
           startPlugins = [
             pkgs.vimPlugins.vimtex
