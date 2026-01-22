@@ -228,12 +228,12 @@ in
 				musicDirectory = "/home/ashley/Nextcloud/music";
 
 				extraConfig = ''
-						auto_update "yes"
+					auto_update "yes"
 
-						audio_output {
-									type "pulse"
-									name "mraow"
-								}
+					audio_output {
+						type "pulse"
+						name "mraow"
+					}
 				'';
 			};
 
@@ -250,13 +250,27 @@ in
 				enable = true;
 				style = {
 					#name = lib.mkForce "WhiteSur";
-					package = pkgs.whitesur-icon-theme;
+                    #package = pkgs.whitesur-icon-theme;
+                    #package = pkgs.kvantum;
+                    name = "kvantum";
 				};
 			};
 
 			home.packages = with pkgs; [
+                # vesktop with a little wrapper script to fix screenshare not working
+                # important here is the egl related env var, which is apparently needed
+                # so it does not crash when trying to open the share dialog
+
+                # it also explicitly sets the app to use wayland, because x11 is evil
+                (vesktop.overrideAttrs (oldAttrs: {
+                    nativeBuildInputs = (oldAttrs.nativeBuildInputs or []) ++ [ makeWrapper ];
+                    postFixup = (oldAttrs.postFixup or "") + ''
+                        wrapProgram $out/bin/vesktop \
+                        --set __EGL_VENDOR_LIBRARY_FILENAMES "/run/opengl-driver/share/glvnd/egl_vendor.d/10_nvidia.json" \
+                        --set NIXOS_OZONE_WL "1"
+                    '';
+                 }))
 				btop
-				vesktop
 				pavucontrol
 				alsa-utils
 				inputs.zen-browser.packages."${stdenv.hostPlatform.system}".default
@@ -327,9 +341,24 @@ in
 		LC_TIME = "de_DE.UTF-8";
 	};
 
-	services.xserver.xkb = {
-		layout = "us";
-		variant = "";
+    i18n.inputMethod = {
+        type = "fcitx5";
+        enable = true;
+        fcitx5.addons = with pkgs; [
+            fcitx5-mozc
+            fcitx5-gtk
+            qt6Packages.fcitx5-chinese-addons
+            catppuccin-fcitx5
+        ];
+        fcitx5.waylandFrontend = true;
+    };
+
+	services.xserver = {
+        desktopManager.runXdgAutostartIfNone = true;
+        xkb = {
+		    layout = "us";
+		    variant = "";
+        };
 	};
 
 	users.users.${username} = {
@@ -375,6 +404,8 @@ in
 		pinentry-qt
 		libnotify
 		nixfmt
+        qt6Packages.fcitx5-configtool
+        mesa-demos
 	];
 
 	environment.sessionVariables = {
@@ -382,6 +413,18 @@ in
 		XCURSOR_SIZE = "24";
 		HYPRCURSOR_SIZE = "";
 	};
+
+    environment.variables = { 
+        QT_QPA_PLATFORMTHEME = "qt5ct"; 
+        QT_STYLE_OVERRIDE = "kvantum";
+
+        XDG_SESSION_TYPE = "wayland";
+        SDL_VIDEODRIVER = "wayland";
+        CLUTTER_BACKEND = "wayland";
+        XDG_CURRENT_DESKTOP = "Hyprland";
+        XDG_SESSION_DESKTOP = "Hyprland";
+        QT_QPA_PLATFORM = "wayland;xcb";
+    };
 
 	programs.gnupg.agent = {
 		enable = true;
@@ -420,11 +463,13 @@ in
 
 	xdg.portal = {
 		enable = true;
+        wlr.enable = false;
+        xdgOpenUsePortal = false;
 		extraPortals = [
 			pkgs.xdg-desktop-portal-hyprland
 			pkgs.xdg-desktop-portal-gtk
 		];
-		config.common.default = "*";
+        config.common.default = "hyprland";
 	};
 
 	systemd.user.services.pipewire-pulse = {
@@ -457,6 +502,8 @@ in
 		package = config.boot.kernelPackages.nvidiaPackages.stable;
 	};
 
+    boot.kernelParams = [ "nvidia-drm.modeset=1" ];
+
 	# This value determines the NixOS release from which the default
 	# settings for stateful data, like file locations and database versions
 	# on your system were taken. It‘s perfectly fine and recommended to leave
@@ -464,5 +511,4 @@ in
 	# Before changing this value read the documentation for this option
 	# (e.g. man configuration.nix or on https://nixos.org/nixos/options.html).
 	system.stateVersion = "25.05"; # Did you read the comment?
-
 }
