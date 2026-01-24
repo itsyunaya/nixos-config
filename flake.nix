@@ -32,9 +32,13 @@
 			# on a binary cache.
 			inputs.nixpkgs.follows = "nixpkgs";
 		};
+
+        # meow
+        hyprland.url = "github:hyprwm/Hyprland";
+        hyprlock.url = "github:hyprwm/hyprlock";
 	};
 
-	outputs = { self, nixpkgs, home-manager, zen-browser, stylix, swww, nvf, ... }@inputs: 
+	outputs = { self, nixpkgs, home-manager, zen-browser, stylix, swww, nvf, hyprland, hyprlock, ... }@inputs: 
 		let
 			system = "x86_64-linux";
 		in {

@@ -1,9 +1,10 @@
-{ pkgs, ... }:
+{ inputs, pkgs, ... }:
 
 {
 	wayland.windowManager.hyprland = {
 		enable = true;
-        portalPackage = pkgs.xdg-desktop-portal-hyprland;
+        package = inputs.hyprland.packages.${pkgs.stdenv.hostPlatform.system}.hyprland;
+        portalPackage = inputs.hyprland.packages.${pkgs.stdenv.hostPlatform.system}.xdg-desktop-portal-hyprland;
 
 		settings = {
 			exec-once = [
@@ -92,7 +93,7 @@
 				"$mainMod, R, exec, $menu"
 				"$mainMod, P, pseudo,"
 				"$mainMod, J, togglesplit,"
-				"$mainMod, L, exec, swaylock"
+				"$mainMod, L, exec, hyprlock"
 				"$mainMod, F, fullscreen"
 
 				"$mainMod, left, movefocus, l"
@@ -218,12 +219,25 @@
 							}
 
 				# fix hyprshot black border
-							layerrule { noanim = true layer = "hyprpicker" } 
-							layerrule { noanim = true layer = "selection" }
+                layerrule {
+                    name = picker-no-anim
+                    match:namespace = hyprpicker
+                    no_anim = on
+                }
+
+                layerrule {
+                    name = selection-no-anim
+                    match:namespace = selection
+                    no_anim = on
+                }
 
 				# fix picture in picture
-				windowrulev2 = float, title:^(Picture-in-Picture)$
-				windowrulev2 = pin, title:^(Picture-in-Picture)$
+                windowrule {
+                    name = pip-settings
+                    match:title = ^(Picture-in-Picture)$
+                    float = on
+                    pin = on
+                }
 					'';
 	};
 }

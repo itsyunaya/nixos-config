@@ -1,4 +1,4 @@
-{ pkgs, ... }:
+{ ... }:
 
 {
 	imports = [
@@ -11,7 +11,8 @@
 		./syscomponents/anyrun.nix
 		./syscomponents/waybar.nix
 		./syscomponents/hyprland.nix
-		./syscomponents/swaylock.nix
+        #./syscomponents/swaylock.nix
+        ./syscomponents/hyprlock.nix
 		./syscomponents/dunst.nix
 
 		./util/keychain.nix

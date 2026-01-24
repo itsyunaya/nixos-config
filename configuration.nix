@@ -27,6 +27,7 @@ in
 
 	home-manager.useUserPackages = true;
 	home-manager.useGlobalPkgs = true;
+    home-manager.extraSpecialArgs = { inherit inputs; };
 
 	home-manager.users.${username} =
 		{ pkgs, ... }:
@@ -203,6 +204,11 @@ in
 			# 	'';
 			# };
 
+            programs.direnv = {
+                enable = true;
+                nix-direnv.enable = true;
+            };
+
 			# Manage some system component themes without stylix
 			stylix = {
 
@@ -286,6 +292,7 @@ in
 				keepassxc
 				hyfetch
 				mangohud
+                vlc
 				musicpresence
 			];
 
@@ -401,6 +408,7 @@ in
 		wl-clipboard
 		rmpc
 		gcc
+        openssl
 		pinentry-qt
 		libnotify
 		nixfmt
@@ -433,6 +441,7 @@ in
 	};
 
 	security.pam.services.swaylock = { };
+    security.pam.services.hyprlock = { };
 
 	# enable the little stars shown when typing in my password (useful because my keyboard is kinda broken :/)
 	security.sudo.extraConfig = "
@@ -492,6 +501,17 @@ in
 			ExecStart = "${pkgs.mpdas}/bin/mpdas";
 		};
 	};
+
+    systemd.user.services.anyrun = {
+        description = "Anyrun launcher daemon";
+        partOf = [ "graphical-session.target" ];
+        wantedBy = [ "graphical-session.target" ];
+
+        serviceConfig = {
+            ExecStart = "${pkgs.anyrun}/bin/anyrun daemon";
+            Restart = "on-failure";
+        };
+    };
 
 	services.xserver.videoDrivers = [ "nvidia" ];
 
