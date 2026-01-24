@@ -6,6 +6,7 @@
 	inputs,
 	config,
 	pkgs,
+    lib,
 	...
 }:
 
@@ -246,6 +247,7 @@ in
 			services.mpd-mpris.enable = true;
 
 			gtk = {
+                enable = true;
 				iconTheme = {
 					name = "WhiteSur";
 					package = pkgs.whitesur-icon-theme;
@@ -288,11 +290,16 @@ in
 				jetbrains.clion
 				zenity
 				kdePackages.dolphin
+                kdePackages.kio-extras
+                kdePackages.kio-admin
+                kdePackages.kio
+                kdePackages.kdegraphics-thumbnailers
 				steam
 				keepassxc
 				hyfetch
 				mangohud
                 vlc
+                tor-browser
 				musicpresence
 			];
 
@@ -414,6 +421,9 @@ in
 		nixfmt
         qt6Packages.fcitx5-configtool
         mesa-demos
+        unzip
+        unrar
+        whitesur-icon-theme
 	];
 
 	environment.sessionVariables = {
@@ -454,6 +464,9 @@ in
 		enable = true;
 		enable32Bit = true;
 	};
+
+    services.udisks2.enable = true;
+    services.dbus.enable = true;
 
 	services.pcscd.enable = true;
 
