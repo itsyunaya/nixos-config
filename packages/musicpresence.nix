@@ -1,4 +1,4 @@
-{ pkgs }:
+{ pkgs, ... }:
 
 pkgs.appimageTools.wrapType1 {
 	pname = "musicpresence";

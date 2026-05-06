@@ -1,12 +1,8 @@
-# Edit this configuration file to define what should be installed on
-# your system.  Help is available in the configuration.nix(5) man page
-# and in the NixOS manual (accessible by running ‘nixos-help’).
-
 { inputs, config, pkgs, lib, ... }:
 
 let
 	username = "ashley";
-	musicpresence = pkgs.callPackage ./modules/media/musicpresence.nix { };
+	tree = inputs.import-tree;
 in {
 	imports = [
     	./hardware-configuration.nix
@@ -22,11 +18,12 @@ in {
 
 	home-manager.extraSpecialArgs = { inherit inputs; };
 	home-manager.users.${username} = { pkgs, ... }: {
-		# to avoid clutter in the main file all program specific configuration is
-		# going to be performed in respective .nix files
-		imports = [
-			./modules/imports.nix
-		];
+		/*
+			to avoid clutter in the main file all program specific configuration is
+			performed in respective .nix module files.
+			imports are handled with import-tree
+		*/
+		imports = [ (tree ./modules) ];
 
 		home.packages = with pkgs; [
 			alsa-utils
@@ -38,7 +35,7 @@ in {
 			jetbrains.webstorm
 			keepassxc
 			mpdas
-			musicpresence
+			(pkgs.callPackage ./packages/musicpresence.nix { })
 			neovim
 			pavucontrol
 			prismlauncher
@@ -140,61 +137,45 @@ in {
 		niri.enable = true;
 	};
 
-  # Bootloader.
-  boot.loader.systemd-boot.enable = true;
-  boot.loader.efi.canTouchEfiVariables = true;
+	boot.loader.systemd-boot.enable = true;
+	boot.loader.efi.canTouchEfiVariables = true;
+	boot.kernelPackages = pkgs.linuxPackages_latest;
 
-  # Use latest kernel.
-  boot.kernelPackages = pkgs.linuxPackages_latest;
+	networking.hostName = "nixos"; # Define your hostname.
+	networking.wireless.enable = true;  # Enables wireless support via wpa_supplicant.
+	networking.networkmanager.enable = true;
 
-  networking.hostName = "nixos"; # Define your hostname.
-  # networking.wireless.enable = true;  # Enables wireless support via wpa_supplicant.
+	time.timeZone = "Europe/Berlin";
+	i18n.defaultLocale = "en_US.UTF-8";
+	i18n.extraLocaleSettings = {
+    	LC_ADDRESS = "de_DE.UTF-8";
+    	LC_IDENTIFICATION = "de_DE.UTF-8";
+    	LC_MEASUREMENT = "de_DE.UTF-8";
+    	LC_MONETARY = "de_DE.UTF-8";
+    	LC_NAME = "de_DE.UTF-8";
+    	LC_NUMERIC = "de_DE.UTF-8";
+    	LC_PAPER = "de_DE.UTF-8";
+    	LC_TELEPHONE = "de_DE.UTF-8";
+    	LC_TIME = "de_DE.UTF-8";
+	};
 
-  # Configure network proxy if necessary
-  # networking.proxy.default = "http://user:password@proxy:port/";
-  # networking.proxy.noProxy = "127.0.0.1,localhost,internal.domain";
+	services.xserver.xkb = {
+    	layout = "us";
+    	variant = "";
+	};
 
-  # Enable networking
-  networking.networkmanager.enable = true;
-
-  # Set your time zone.
-  time.timeZone = "Europe/Berlin";
-
-  # Select internationalisation properties.
-  i18n.defaultLocale = "en_US.UTF-8";
-
-  i18n.extraLocaleSettings = {
-    LC_ADDRESS = "de_DE.UTF-8";
-    LC_IDENTIFICATION = "de_DE.UTF-8";
-    LC_MEASUREMENT = "de_DE.UTF-8";
-    LC_MONETARY = "de_DE.UTF-8";
-    LC_NAME = "de_DE.UTF-8";
-    LC_NUMERIC = "de_DE.UTF-8";
-    LC_PAPER = "de_DE.UTF-8";
-    LC_TELEPHONE = "de_DE.UTF-8";
-    LC_TIME = "de_DE.UTF-8";
-  };
-
-  # Configure keymap in X11
-  services.xserver.xkb = {
-    layout = "us";
-    variant = "";
-  };
-
-  # Define a user account. Don't forget to set a password with ‘passwd’.
 	users.users.${username} = {
 		isNormalUser = true;
-		description = "ashley";
+		description = "${username}";
 		extraGroups = [ "networkmanager" "wheel" ];
 		packages = with pkgs; [];
 		shell = pkgs.zsh;
 	};
 
-  # Allow unfree packages
-  nixpkgs.config.allowUnfree = true;
+	nixpkgs.config.allowUnfree = true;
 
-  # List packages installed in system profile. To search, run:
-  # $ nix search wget
+	# List packages installed in system profile. To search, run:
+	# $ nix search wget
 	environment.systemPackages = with pkgs; [
 		vim
 		wget
@@ -204,6 +185,7 @@ in {
 		gcc
 		nodejs
 		pnpm
+		nixd
 		openssl
 		pinentry-qt
 		libnotify
@@ -218,8 +200,6 @@ in {
 		inputs.awww.packages.${pkgs.stdenv.hostPlatform.system}.awww
   	];
 
-	#environment.pathsToLink = [ "/share/applications" "/share/xdg-desktop-portal" ];
-
 	services.pipewire = {
 		enable = true;
 		alsa.enable = true;
@@ -232,7 +212,7 @@ in {
 	programs.gnupg.agent = {
 		enable = true;
 		enableSSHSupport = true;
-		pinentryPackage = pkgs.pinentry-gtk2;
+		pinentryPackage = pkgs.pinentry-qt;
 	};
 
 	# enable the little stars when typing my password (useful because im bad at typing :p)
@@ -252,31 +232,12 @@ in {
     	nvidiaSettings = true;
 	};
 
-  # Some programs need SUID wrappers, can be configured further or are
-  # started in user sessions.
-  # programs.mtr.enable = true;
-  # programs.gnupg.agent = {
-  #   enable = true;
-  #   enableSSHSupport = true;
-  # };
-
-  # List services that you want to enable:
-
-  # Enable the OpenSSH daemon.
-  # services.openssh.enable = true;
-
-  # Open ports in the firewall.
-  # networking.firewall.allowedTCPPorts = [ ... ];
-  # networking.firewall.allowedUDPPorts = [ ... ];
-  # Or disable the firewall altogether.
-  # networking.firewall.enable = false;
-
-  # This value determines the NixOS release from which the default
-  # settings for stateful data, like file locations and database versions
-  # on your system were taken. It‘s perfectly fine and recommended to leave
-  # this value at the release version of the first install of this system.
-  # Before changing this value read the documentation for this option
-  # (e.g. man configuration.nix or on https://nixos.org/nixos/options.html).
-  system.stateVersion = "25.11"; # Did you read the comment?
+	# This value determines the NixOS release from which the default
+	# settings for stateful data, like file locations and database versions
+	# on your system were taken. It‘s perfectly fine and recommended to leave
+	# this value at the release version of the first install of this system.
+	# Before changing this value read the documentation for this option
+	# (e.g. man configuration.nix or on https://nixos.org/nixos/options.html).
+	system.stateVersion = "25.11"; # Did you read the comment?
 
 }
