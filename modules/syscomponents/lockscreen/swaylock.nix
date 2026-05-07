@@ -8,7 +8,7 @@
 
         xdg.configFile."swaylock/config".text =
             let
-                src = "./assets/wallpapers/clouds.jpg";
+                src = "${toString ./.}/../../../assets/wallpapers/clouds.jpg";
             in
             ''
                 image=${src}
