@@ -1,4 +1,4 @@
-{ inputs, config, pkgs, lib, ... }:
+{ theme, inputs, config, pkgs, lib, ... }:
 
 let
 	username = "ashley";
@@ -17,12 +17,12 @@ in {
 	home-manager.useGlobalPkgs = true;
 	home-manager.useUserPackages = true;
 
-	home-manager.extraSpecialArgs = { inherit inputs; };
+	home-manager.extraSpecialArgs = { inherit inputs theme; };
 	home-manager.users.${username} = { pkgs, ... }: {
 		itsyunaya-nix = {
 			# currently unused
 			compositor = "hyprland";
-			lock-app = "swaylock";
+			lock-app = "hyprlock";
 		};
 
 		/*

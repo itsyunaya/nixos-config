@@ -34,7 +34,10 @@
 		nixosConfigurations.nixos = nixpkgs.lib.nixosSystem {
 			
 			inherit system;
-			specialArgs = { inherit inputs; };
+			specialArgs = {
+				inherit inputs;
+				theme = import ./theme.nix;
+			};
 
 			modules = [
 				./configuration.nix
