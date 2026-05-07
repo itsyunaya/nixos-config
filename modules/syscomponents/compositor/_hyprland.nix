@@ -16,6 +16,7 @@ in {
 				"mpd-mpris"
 				"mpdas"
 				"musicpresence"
+				"fcitx5"
 				"anyrun daemon"
 			];
 

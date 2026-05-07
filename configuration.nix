@@ -148,7 +148,7 @@ in {
 	boot.loader.efi.canTouchEfiVariables = true;
 	boot.kernelPackages = pkgs.linuxPackages_latest;
 
-	networking.hostName = "nixos"; # Define your hostname.
+	networking.hostName = "nixos";
 	networking.wireless.enable = true;  # Enables wireless support via wpa_supplicant.
 	networking.networkmanager.enable = true;
 
@@ -164,6 +164,16 @@ in {
     	LC_PAPER = "de_DE.UTF-8";
     	LC_TELEPHONE = "de_DE.UTF-8";
     	LC_TIME = "de_DE.UTF-8";
+	};
+
+	i18n.inputMethod = {
+		enable = true;
+		type = "fcitx5";
+		fcitx5.waylandFrontend = true;
+		fcitx5.addons = with pkgs; [
+			fcitx5-mozc
+			fcitx5-gtk
+		];
 	};
 
 	services.xserver.xkb = {
@@ -200,12 +210,26 @@ in {
 		unzip
 		unrar
 		mpd-mpris
+		docker-compose
 
 		# styling
 		whitesur-cursors
 		whitesur-icon-theme
 		inputs.awww.packages.${pkgs.stdenv.hostPlatform.system}.awww
   	];
+
+  	environment.sessionVariables = {
+  		GTK_IM_MODULE = "fcitx";
+		QT_IM_MODULE = "fcitx";
+		XMODIFIERS = "@im=fcitx";
+		SDL_IM_MODULE = "fcitx";
+		GLFW_IM_MODULE = "ibus";
+  	};
+
+  	virtualisation.podman = {
+  		enable = true;
+  		dockerCompat = true;
+  	};
 
 	services.pipewire = {
 		enable = true;
