@@ -26,6 +26,7 @@
         modules-right = [
           "tray"
           "custom/hyprpicker"
+          "bluetooth"
           "cpu"
           "memory"
           "pulseaudio#input"
@@ -128,6 +129,17 @@
           on-click-middle = "pavucontrol";
           on-scroll-up = "amixer sset 'Capture' 2%+";
           on-scroll-down = "amixer sset 'Capture' 2%-";
+        };
+
+        "bluetooth" = {
+            format-on = "󰂯";
+            format-off = "󰂲";
+            format-disabled = "";
+            format-connected = "󰂱 {num_connections}";
+            tooltip-format-connected = "{device_enumerate}";
+            tooltip-format-enumerate-connected = "{device_alias}\t{device_address}";
+            on-click = "bluetoothctl power on";
+            on-click-right = "bluetoothctl power off";
         };
 
         "custom/launcher" = {

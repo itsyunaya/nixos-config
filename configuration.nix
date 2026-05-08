@@ -37,6 +37,7 @@ in {
 			btop
 			fd
 			fzf
+			hyprpicker
 			jetbrains.clion
 			jetbrains.idea
 			jetbrains.webstorm
@@ -141,6 +142,7 @@ in {
 		appimage.enable = true;
 		appimage.binfmt = true;
 
+		hyprland.enable = true;
 		niri.enable = true;
 	};
 
@@ -185,7 +187,7 @@ in {
 		isNormalUser = true;
 		description = "${username}";
 		extraGroups = [ "networkmanager" "wheel" ];
-		packages = with pkgs; [];
+		packages = [];
 		shell = pkgs.zsh;
 	};
 
@@ -219,7 +221,6 @@ in {
   	];
 
   	environment.sessionVariables = {
-  		GTK_IM_MODULE = "fcitx";
 		QT_IM_MODULE = "fcitx";
 		XMODIFIERS = "@im=fcitx";
 		SDL_IM_MODULE = "fcitx";
@@ -230,6 +231,9 @@ in {
   		enable = true;
   		dockerCompat = true;
   	};
+
+	# TODO: nixpkgs ships an old version, make own derivation
+  	services.displayManager.ly.enable = true;
 
 	services.pipewire = {
 		enable = true;
@@ -267,6 +271,15 @@ in {
     	modesetting.enable = true;
     	open = false;
     	nvidiaSettings = true;
+	};
+
+	hardware.bluetooth = {
+		enable = true;
+		powerOnBoot = true;
+		settings.General = {
+			Experimental = true;
+			FastConnectable = true;
+		};
 	};
 
 	# This value determines the NixOS release from which the default
