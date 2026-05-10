@@ -16,6 +16,7 @@
 			user.signingKey = "198EA594738FED19";
 			commit.gpgsign = true;
 			tag.gpgSign = true;
+			init.defaultBranch = "main";
 		};
 	};
 

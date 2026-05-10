@@ -7,6 +7,7 @@ in {
 		programs.hyprlock = {
 			enable = true;
 
+			# ported from https://github.com/LoneWolf4713/seraphic.dotfiles/blob/b87fe836927ea11b42c93192dec974d6872b94b3/dotfiles/hypr/hyprlock.conf
 			settings = {
 				background = {
 					monitor = "";

@@ -38,6 +38,7 @@ in {
 			fd
 			fzf
 			hyprpicker
+			hyprshot
 			jetbrains.clion
 			jetbrains.idea
 			jetbrains.webstorm
@@ -47,9 +48,11 @@ in {
 			neovim
 			pavucontrol
 			prismlauncher
+			qbittorrent
 			rmpc
 			ripgrep
 			steam
+			telegram-desktop
 			vesktop
 			xlsclients			
 			inputs.zen-browser.packages."${stdenv.hostPlatform.system}".default
@@ -144,6 +147,8 @@ in {
 
 		hyprland.enable = true;
 		niri.enable = true;
+
+		anime-game-launcher.enable = true;
 	};
 
 	boot.loader.systemd-boot.enable = true;
@@ -208,11 +213,11 @@ in {
 		openssl
 		pinentry-qt
 		libnotify
-		nixfmt
 		unzip
 		unrar
 		mpd-mpris
 		docker-compose
+		ffmpeg
 
 		# styling
 		whitesur-cursors
@@ -234,6 +239,14 @@ in {
 
 	# TODO: nixpkgs ships an old version, make own derivation
   	services.displayManager.ly.enable = true;
+
+	services.mullvad-vpn = {
+		enable = true;
+		package = pkgs.mullvad-vpn;
+	};
+
+	# needed for mullvad
+	services.resolved.enable = true;
 
 	services.pipewire = {
 		enable = true;

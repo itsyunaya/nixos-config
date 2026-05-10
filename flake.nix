@@ -14,6 +14,12 @@
 		#	inputs.nixpkgs.follows = "nixpkgs";
 		#};
 
+		# https://github.com/an-anime-team/anime-games-launcher
+		aagl = {
+			url = "github:ezKEa/aagl-gtk-on-nix";
+			inputs.nixpkgs.follows = "nixpkgs";
+		};
+
 		# https://codeberg.org/LGFae/awww
         awww.url = "git+https://codeberg.org/LGFae/awww";
 
@@ -27,7 +33,7 @@
 		zen-browser.url = "github:0xc000022070/zen-browser-flake";
 	};
 
-	outputs = inputs @ { self, nixpkgs, home-manager, awww, import-tree, hyprland, zen-browser, ... }:
+	outputs = inputs @ { self, nixpkgs, home-manager, aagl, awww, import-tree, hyprland, zen-browser, ... }:
 	let
 		system = "x86_64-linux";
 	in {
@@ -46,6 +52,7 @@
 				#{ nixpkgs.overlays = [ niri.overlays.niri ]; }
 
 				home-manager.nixosModules.home-manager
+				aagl.nixosModules.default
 
 				#niri.nixosModules.niri
 			];
