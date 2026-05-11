@@ -219,6 +219,8 @@ in {
 		mpd-mpris
 		docker-compose
 		ffmpeg
+		devenv
+		rustup
 
 		# styling
 		whitesur-cursors

@@ -25,4 +25,13 @@
 		enableZshIntegration = true;
 		shellWrapperName = "y";
 	};
+
+	programs.direnv = {
+		enable = true;
+		enableZshIntegration = true;
+		nix-direnv.enable = true;
+		stdlib = ''
+			source ${pkgs.devenv}/share/devenv/direnvrc
+		'';
+	};
 }

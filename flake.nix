@@ -29,11 +29,14 @@
         # https://github.com/hyprwm/Hyprland
         hyprland.url = "github:hyprwm/Hyprland";
 
+        # https://github.com/Gerg-L/spicetify-nix/
+        spicetify-nix.url = "github:Gerg-L/spicetify-nix";
+
 		# https://github.com/0xc000022070/zen-browser-flake
 		zen-browser.url = "github:0xc000022070/zen-browser-flake";
 	};
 
-	outputs = inputs @ { self, nixpkgs, home-manager, aagl, awww, import-tree, hyprland, zen-browser, ... }:
+	outputs = inputs @ { self, nixpkgs, home-manager, aagl, awww, import-tree, hyprland, spicetify-nix, zen-browser, ... }:
 	let
 		system = "x86_64-linux";
 	in {
@@ -53,6 +56,12 @@
 
 				home-manager.nixosModules.home-manager
 				aagl.nixosModules.default
+
+				{
+                	home-manager.sharedModules = [
+						spicetify-nix.homeManagerModules.spicetify
+					];
+				}
 
 				#niri.nixosModules.niri
 			];
