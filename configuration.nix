@@ -33,6 +33,25 @@ in {
 		imports = [ (tree ./modules) ];
 
 		home.packages = with pkgs; [
+			(pkgs.texlive.combine {
+				inherit (pkgs.texlive)
+					scheme-medium
+
+					biber
+					biblatex
+					biblatex-bath
+					circuitikz
+					csquotes
+					lastpage
+					mdframed
+					needspace
+					pgfplots
+					svg
+					transparent
+					wrapfig
+					zref;
+			})
+
 			alsa-utils
 			btop
 			fd
@@ -45,7 +64,6 @@ in {
 			keepassxc
 			mpdas
 			(pkgs.callPackage ./packages/musicpresence.nix { })
-			neovim
 			pavucontrol
 			prismlauncher
 			qbittorrent
@@ -221,6 +239,17 @@ in {
 		ffmpeg
 		devenv
 		rustup
+		zathura
+		thunar
+		thunar-media-tags-plugin
+		thunar-shares-plugin
+		cifs-utils
+		samba
+		gvfs
+		glib
+		tumbler
+		ffmpegthumbnailer
+		poppler
 
 		# styling
 		whitesur-cursors
@@ -239,6 +268,10 @@ in {
   		enable = true;
   		dockerCompat = true;
   	};
+
+	services.gvfs.enable = true;
+	services.samba.enable = true;
+	services.tumbler.enable = true;
 
 	# TODO: nixpkgs ships an old version, make own derivation
   	services.displayManager.ly.enable = true;

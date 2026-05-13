@@ -18,6 +18,7 @@ in {
 				"musicpresence"
 				"fcitx5"
 				"anyrun daemon"
+				"playerctld"
 			];
 
 			monitor = [
@@ -26,7 +27,7 @@ in {
 			];
 
 			"$terminal" = "hyprctl dispatch exec '[float; size 1000 510]' kitty";
-			"$fileManager" = "dolphin";
+			"$fileManager" = "thunar";
 			"$menu" = "anyrun";
 
 			general = {
@@ -97,7 +98,7 @@ in {
 				"$mainMod, C, killactive,"
 				"$mainMod SHIFT, C, exec, kill -9 $(hyprctl activewindow -j | jq -r '.pid')"
 				"$mainMod, M, exit,"
-				"$mainMod, E, exec, dolphin"
+				"$mainMod, E, exec, $fileManager"
 				"$mainMod, V, togglefloating,"
 				"$mainMod, R, exec, $menu"
 				"$mainMod, P, pseudo,"

@@ -29,6 +29,11 @@
         # https://github.com/hyprwm/Hyprland
         hyprland.url = "github:hyprwm/Hyprland";
 
+		nixvim = {
+			url = "github:nix-community/nixvim";
+			inputs.nixpkgs.follows = "nixpkgs";
+          };
+
         # https://github.com/Gerg-L/spicetify-nix/
         spicetify-nix.url = "github:Gerg-L/spicetify-nix";
 
@@ -36,7 +41,7 @@
 		zen-browser.url = "github:0xc000022070/zen-browser-flake";
 	};
 
-	outputs = inputs @ { self, nixpkgs, home-manager, aagl, awww, import-tree, hyprland, spicetify-nix, zen-browser, ... }:
+	outputs = inputs @ { self, nixpkgs, home-manager, aagl, nixvim, spicetify-nix, ... }:
 	let
 		system = "x86_64-linux";
 	in {
@@ -60,6 +65,7 @@
 				{
                 	home-manager.sharedModules = [
 						spicetify-nix.homeManagerModules.spicetify
+						nixvim.homeModules.nixvim
 					];
 				}
 
