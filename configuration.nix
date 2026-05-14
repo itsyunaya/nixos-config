@@ -70,7 +70,7 @@ in {
 			qbittorrent
 			rmpc
 			ripgrep
-			(pkgs.callPackage ./packages/spotiflac/default.nix { })
+			#(pkgs.callPackage ./packages/spotiflac/default.nix { })
 			steam
 			telegram-desktop
 			vesktop
@@ -272,6 +272,7 @@ in {
 		ffmpegthumbnailer
 		poppler
 		qimgv
+		alejandra
 
 		# styling
 		whitesur-cursors

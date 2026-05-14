@@ -1,4 +1,4 @@
-{ ... }:
+{ theme, ... }:
 
 {
 	services.dunst = {
@@ -6,9 +6,9 @@
 
 		settings = {
 			global = {
-				frame_color = "#ffc8dd";
+				frame_color = "#${theme.colours.accent-pink}";
 				separator_color = "frame";
-				highlight = "#ffc8dd";
+				highlight = "#${theme.colours.accent-pink}";
 				transparency = 20;
 				offset = 20;
 				font = "JetbrainsMonoNL Nerd Font";
