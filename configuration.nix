@@ -20,8 +20,14 @@ in {
 	home-manager.extraSpecialArgs = { inherit inputs theme self; };
 	home-manager.users.${username} = { pkgs, ... }: {
 		itsyunaya-nix = {
-			# currently unused
+			/*
+				CAUTION: changing this always requires a reboot, and should only be performed
+				from tty. If the compositor is running while its file gets removed by home-manager,
+				it might fall back to a default one which needs to be removed manually
+				since hm can't overwrite it anymore at that point
+			*/
 			compositor = "hyprland";
+
 			lock-app = "hyprlock";
 		};
 
@@ -74,7 +80,8 @@ in {
 			steam
 			telegram-desktop
 			vesktop
-			xlsclients			
+			xlsclients
+			yams
 			inputs.zen-browser.packages."${stdenv.hostPlatform.system}".default
 		];
 
@@ -186,6 +193,7 @@ in {
 		appimage.binfmt = true;
 
 		hyprland.enable = true;
+		mango.enable = true;
 		niri.enable = true;
 
 		anime-game-launcher.enable = true;
