@@ -164,6 +164,11 @@
 			softtabstop = 4;
 			shiftwidth = 4;
 			smartindent = true;
+
+			wildmenu = true;
+			wildmode = "longest:full,full";
+			wildignorecase = true;
+			wildoptions = "pum";
 		};
 
 		autoCmd = [

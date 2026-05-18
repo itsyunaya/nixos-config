@@ -281,6 +281,7 @@ in {
 		poppler
 		qimgv
 		alejandra
+		openrgb
 
 		# styling
 		whitesur-cursors
@@ -340,6 +341,8 @@ in {
   	security.pam.services =
         lib.optionalAttrs hm.programs.swaylock.enable { swaylock = { }; }
         // lib.optionalAttrs hm.programs.hyprlock.enable { hyprlock = { }; };
+
+    services.hardware.openrgb.enable = true;
 
 	services.xserver.videoDrivers = ["nvidia"];
 	hardware.graphics = {
