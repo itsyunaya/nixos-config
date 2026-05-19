@@ -1,11 +1,11 @@
 {
-	config,
+	osConfig,
 	lib,
 	theme,
 	...
 }: {
 	config =
-		lib.mkIf (config.itsyunaya-nix.compositor == "mango") {
+		lib.mkIf (osConfig.itsyunaya-nix.compositor == "mango") {
 			wayland.windowManager.mango = {
 				enable = true;
 				systemd.enable = true;

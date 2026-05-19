@@ -7,6 +7,7 @@ let
 in {
 	imports = [
     	./hardware-configuration.nix
+    	./options.nix
     ];
 
 	nix.settings.experimental-features = [
@@ -14,23 +15,25 @@ in {
 		"flakes"
 	];
 
+	itsyunaya-nix = {
+    	/*
+    		CAUTION: changing this always requires a reboot, and should only be performed
+    		from tty. If the compositor is running while its file gets removed by home-manager,
+    		it might fall back to a default one which needs to be removed manually
+    		since hm can't overwrite it anymore at that point
+    	*/
+		compositor = "hyprland";
+
+		shell = "nushell";
+		lock-app = "hyprlock";
+	};
+
+
 	home-manager.useGlobalPkgs = true;
 	home-manager.useUserPackages = true;
 
 	home-manager.extraSpecialArgs = { inherit inputs theme self; };
 	home-manager.users.${username} = { pkgs, ... }: {
-		itsyunaya-nix = {
-			/*
-				CAUTION: changing this always requires a reboot, and should only be performed
-				from tty. If the compositor is running while its file gets removed by home-manager,
-				it might fall back to a default one which needs to be removed manually
-				since hm can't overwrite it anymore at that point
-			*/
-			compositor = "hyprland";
-
-			lock-app = "hyprlock";
-		};
-
 		/*
 			to avoid clutter in the main file all program specific configuration is
 			performed in respective .nix module files.
@@ -187,7 +190,7 @@ in {
 	# these have to be enabled on a systemwide level
 	# i forgot why, but my old config had it so im keeping it :>
 	programs = {
-		zsh.enable = true;
+		zsh.enable = config.itsyunaya-nix.shell == "zsh";
 
 		appimage.enable = true;
 		appimage.binfmt = true;
@@ -241,7 +244,7 @@ in {
 		description = "${username}";
 		extraGroups = [ "networkmanager" "wheel" ];
 		packages = [];
-		shell = pkgs.zsh;
+		shell = if config.itsyunaya-nix.shell == "zsh" then pkgs.zsh else pkgs.nushell;
 	};
 
 	nixpkgs.config.allowUnfree = true;
@@ -281,7 +284,6 @@ in {
 		poppler
 		qimgv
 		alejandra
-		openrgb
 
 		# styling
 		whitesur-cursors
@@ -342,8 +344,6 @@ in {
         lib.optionalAttrs hm.programs.swaylock.enable { swaylock = { }; }
         // lib.optionalAttrs hm.programs.hyprlock.enable { hyprlock = { }; };
 
-    services.hardware.openrgb.enable = true;
-
 	services.xserver.videoDrivers = ["nvidia"];
 	hardware.graphics = {
 		enable = true;
@@ -355,6 +355,9 @@ in {
     	open = false;
     	nvidiaSettings = true;
 	};
+
+	# makes my bluetooth not explode hopefully
+	hardware.firmware = [ pkgs.linux-firmware ];
 
 	hardware.bluetooth = {
 		enable = true;

@@ -1,5 +1,5 @@
 {
-	config,
+	osConfig,
 	lib,
 	theme,
 	inputs,
@@ -7,7 +7,7 @@
 	...
 }: {
 	config =
-		lib.mkIf (config.itsyunaya-nix.compositor == "hyprland") {
+		lib.mkIf (osConfig.itsyunaya-nix.compositor == "hyprland") {
 			wayland.windowManager.hyprland = {
 				enable = true;
 				package = inputs.hyprland.packages.${pkgs.stdenv.hostPlatform.system}.hyprland;
@@ -104,7 +104,8 @@
 						"$mainMod, Q, exec, $terminal"
 						"$mainMod, C, killactive,"
 						"$mainMod SHIFT, C, exec, kill -9 $(hyprctl activewindow -j | jq -r '.pid')"
-						"$mainMod, M, exit,"
+						# the only time i pressed this was on accident and then i got sad cuz i had to reopen my windows
+						#"$mainMod, M, exit,"
 						"$mainMod, E, exec, $fileManager"
 						"$mainMod, V, togglefloating,"
 						"$mainMod, R, exec, $menu"

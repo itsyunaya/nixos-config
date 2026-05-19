@@ -1,9 +1,13 @@
-{ pkgs, ... }:
+{ osConfig, pkgs, ... }:
 
-{
+let
+	shell = osConfig.itsyunaya-nix.shell;
+in {
 	programs.eza = {
-		enable = true;
-		enableZshIntegration = true;
+		enable = osConfig.itsyunaya-nix.shell == "zsh";
+
+		enableZshIntegration = shell == "zsh";
+		#enableNushellIntegration = shell == "nushell";
 	};
 	
 	programs.git = {
@@ -22,13 +26,18 @@
 
 	programs.yazi = {
 		enable = true;
-		enableZshIntegration = true;
 		shellWrapperName = "y";
+
+		enableZshIntegration = shell == "zsh";
+		enableNushellIntegration = shell == "nushell";
 	};
 
 	programs.direnv = {
 		enable = true;
-		enableZshIntegration = true;
+
+		enableZshIntegration = shell == "zsh";
+        enableNushellIntegration = shell == "nushell";
+
 		nix-direnv.enable = true;
 		stdlib = builtins.readFile (pkgs.runCommand "devenv-direnvrc" {} ''
 			${pkgs.devenv}/bin/devenv direnvrc > $out

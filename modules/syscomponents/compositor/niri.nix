@@ -1,11 +1,12 @@
 {
+	osConfig,
 	config,
 	lib,
 	pkgs,
 	...
 }: {
 	config =
-		lib.mkIf (config.itsyunaya-nix.compositor == "niri") {
+		lib.mkIf (osConfig.itsyunaya-nix.compositor == "niri") {
 			programs.niri = {
 				package = pkgs.niri-unstable;
 

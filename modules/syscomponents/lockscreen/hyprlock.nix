@@ -1,7 +1,7 @@
-{ theme, config, lib, ... }:
+{ theme, osConfig, lib, ... }:
 
 {
-	config = lib.mkIf (config.itsyunaya-nix.lock-app == "hyprlock") {
+	config = lib.mkIf (osConfig.itsyunaya-nix.lock-app == "hyprlock") {
 		programs.hyprlock = {
 			enable = true;
 

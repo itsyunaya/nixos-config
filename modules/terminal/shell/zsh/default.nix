@@ -1,8 +1,8 @@
-{ ... }:
+{ osConfig, ... }:
 
 {
 	programs.zsh = {
-		enable = true;
+		enable = osConfig.itsyunaya-nix.shell == "zsh";
 		enableCompletion = true;
 
 		autosuggestion = {
