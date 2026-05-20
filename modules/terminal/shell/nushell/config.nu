@@ -171,8 +171,11 @@ $env.config.explore = {
     selected_cell: { bg: $theme.blue fg: $theme.base },
 }
 
-$env.PROMPT_INDICATOR = {|| $"(ansi { fg: $theme.pink })(ansi reset) " }
+$env.PROMPT_INDICATOR = {|| $"(ansi { fg: $theme.pink })🩷(ansi reset) " }
 $env.PROMPT_COMMAND = {||
   let dir = $env.PWD | str replace $env.HOME "~"
   $"(ansi { fg: $theme.green })($dir)(ansi reset) "
 }
+
+$env.TRANSIENT_PROMPT_INDICATOR = {|| $"(ansi { fg: $theme.pink })(ansi reset) " }
+$env.TRANSIENT_PROMPT_COMMAND = ""

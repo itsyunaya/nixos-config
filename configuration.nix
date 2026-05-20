@@ -22,6 +22,7 @@ in {
     		it might fall back to a default one which needs to be removed manually
     		since hm can't overwrite it anymore at that point
     	*/
+    	# redundant rn
 		compositor = "hyprland";
 
 		shell = "nushell";
@@ -64,6 +65,9 @@ in {
 			alsa-utils
 			aseprite
 			btop
+			(discord.override {
+                  withVencord = true;
+                })
 			fd
 			fzf
 			hyprpicker
@@ -79,7 +83,6 @@ in {
 			qbittorrent
 			rmpc
 			ripgrep
-			#(pkgs.callPackage ./packages/spotiflac/default.nix { })
 			steam
 			telegram-desktop
 			vesktop
@@ -196,7 +199,7 @@ in {
 		appimage.binfmt = true;
 
 		hyprland.enable = true;
-		mango.enable = true;
+		#mango.enable = true;
 		niri.enable = true;
 
 		anime-game-launcher.enable = true;
@@ -252,38 +255,38 @@ in {
 	# List packages installed in system profile. To search, run:
 	# $ nix search wget
 	environment.systemPackages = with pkgs; [
-		vim
-		wget
-		playerctl
-		xdg-utils
-		wl-clipboard
-		gcc
-		nodejs
-		pnpm
-		nixd
-		openssl
-		pinentry-qt
-		libnotify
-		unzip
-		unrar
-		mpd-mpris
-		docker-compose
-		ffmpeg
-		devenv
-		rustup
-		zathura
-		thunar
-		thunar-media-tags-plugin
-		thunar-shares-plugin
-		cifs-utils
-		samba
-		gvfs
-		glib
-		tumbler
-		ffmpegthumbnailer
-		poppler
-		qimgv
 		alejandra
+        cifs-utils
+        devenv
+        docker-compose
+        ffmpeg
+        ffmpegthumbnailer
+        gcc
+        glib
+        gvfs
+        libnotify
+        mpd-mpris
+        nixd
+        nodejs
+        openssl
+        pinentry-qt
+        playerctl
+        pnpm
+        poppler
+        qimgv
+        rustup
+        samba
+        thunar
+        thunar-media-tags-plugin
+        thunar-shares-plugin
+        tumbler
+        unrar
+        unzip
+        vim
+        wget
+        wl-clipboard
+        xdg-utils
+        zathura
 
 		# styling
 		whitesur-cursors

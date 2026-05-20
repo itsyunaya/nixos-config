@@ -2,7 +2,7 @@
 
 {
 	options.itsyunaya-nix.compositor = lib.mkOption {
-		type = lib.types.enum [ "hyprland" "niri" "mango" ];
+		type = lib.types.enum [ "hyprland" /*"niri" "mango"*/ ];
 		default = "hyprland";
 		description = "Which compositor to choose (hypr/niri/mango)";
 	};

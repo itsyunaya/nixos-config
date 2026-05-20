@@ -11,11 +11,16 @@
 
 		plugins = {
 			lualine.enable = true;
-			treesitter.enable = true;
 			telescope.enable = true;
 			cmp-luasnip.enable = true;
 
 			web-devicons.enable = true;
+
+			treesitter = {
+				enable = true;
+
+				settings.ensure_installed = [ "python" ];
+			};
 
 			transparent = {
 				enable = true;
@@ -95,6 +100,7 @@
 				servers = {
 					texlab.enable = true;
 					nil_ls.enable = true;
+					pyright.enable = true;
 				};
 			};
 
