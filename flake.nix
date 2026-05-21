@@ -15,6 +15,12 @@
 			inputs.nixpkgs.follows = "nixpkgs";
 		};
 
+		# https://github.com/itsyunaya/alejandra-opinionated
+		alejandra = {
+			url = "github:itsyunaya/alejandra-opinionated";
+			inputs.nixpkgs.follows = "nixpkgs";
+		};
+
 		# https://codeberg.org/LGFae/awww
         awww.url = "git+https://codeberg.org/LGFae/awww";
 
@@ -45,11 +51,14 @@
         # https://github.com/Gerg-L/spicetify-nix/
         spicetify-nix.url = "github:Gerg-L/spicetify-nix";
 
+		# https://github.com/itsyunaya/xwl-notifier-rs
+		xwl-notifier.url = "github:itsyunaya/xwl-notifier-rs";
+
 		# https://github.com/0xc000022070/zen-browser-flake
 		zen-browser.url = "github:0xc000022070/zen-browser-flake";
 	};
 
-	outputs = inputs @ { self, nixpkgs, home-manager, aagl, nixvim, spicetify-nix, ... }:
+	outputs = inputs @ { self, nixpkgs, home-manager, aagl, alejandra, nixvim, spicetify-nix, xwl-notifier, ... }:
 	let
 		system = "x86_64-linux";
 	in {
@@ -65,7 +74,14 @@
 				./configuration.nix
 				./hardware-configuration.nix
 
-				#{ nixpkgs.overlays = [ niri.overlays.niri ]; }
+				{
+					nixpkgs.overlays = [
+						(final: prev: {
+							alejandra = alejandra.packages.${prev.stdenv.hostPlatform.system}.default;
+						})
+						xwl-notifier.overlays.default
+					];
+				}
 
 				home-manager.nixosModules.home-manager
 				aagl.nixosModules.default

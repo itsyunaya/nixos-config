@@ -26,6 +26,7 @@
 						"fcitx5"
 						"anyrun daemon"
 						"playerctld"
+						"xwl-notifier"
 					];
 
 					monitor = [
