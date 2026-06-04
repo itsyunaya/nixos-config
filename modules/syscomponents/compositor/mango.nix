@@ -28,6 +28,8 @@
 						"name:^DP-2$,width:1920,height:1080,refresh:60,x:0,y:0,scale:1"
 					];
 
+					syncobj_enable = 1;
+
 					gappih = 3;
 					gappiv = 3;
 					gappoh = 7;
@@ -42,7 +44,7 @@
 					unfocused_opacity = 1.0;
 
 					blur = 1;
-					blur_optimized = 1;
+					blur_optimized = 0;
 					blur_params_radius = 1;
 					blur_params_num_passes = 1;
 					blur_layer = 1;
@@ -76,12 +78,13 @@
 					animation_curve_opafadeout = "0.5,0.5,0.75,1.0";
 
 					bind = [
-						"SUPER,Q,spawn,kitty"
 						"SUPER,E,spawn,thunar"
 						"SUPER,R,spawn,anyrun"
 
 						"SUPER,C,killclient"
 						"SUPER+SHIFT,C,spawn_shell,kill -9 $(mmsg -j activewindow | jq -r .pid)"
+
+						"SUPER,M,reload_config"
 
 						"SUPER,V,togglefloating"
 						"SUPER,F,togglefullscreen"
@@ -134,7 +137,11 @@
 						"NONE,XF86AudioMicMute,spawn,wpctl set-mute @DEFAULT_AUDIO_SOURCE@ toggle"
 						"NONE,XF86MonBrightnessUp,spawn,brightnessctl -e4 -n2 set 5%+"
 						"NONE,XF86MonBrightnessDown,spawn,brightnessctl -e4 -n2 set 5%-"
-					];
+					] ++ (
+						if (osConfig.itsyunaya-nix.terminal == "kitty") then ["SUPER,Q,spawn,kitty"]
+						else if (osConfig.itsyunaya-nix.terminal == "ghostty") then ["SUPER,Q,spawn,ghostty"]
+						else []
+					);
 
 					bindl = [
 						"NONE,XF86AudioNext,spawn,playerctl next"
@@ -156,15 +163,15 @@
 					windowrule = [
 						"ignore_maximize:1,appid:.*"
 
-						"isfloating:1,width:1000,height:510,appid:kitty"
-
 						"isfloating:1,title:^Picture-in-Picture$"
 						"isglobal:1,title:^Picture-in-Picture$"
 
-						"isnoanimation:1,appid:hyprpicker"
-					];
-
-
+						#"isnoanimation:1,appid:hyprpicker"
+					] ++ (
+						if (osConfig.itsyunaya-nix.terminal == "kitty") then ["isfloating:1,width:1000,height:510,appid:kitty"]
+						else if (osConfig.itsyunaya-nix.terminal == "ghostty") then ["isfloating:1,width:1000,height:550,appid:ghostty"]
+						else []
+					);
 				};
 
 			};

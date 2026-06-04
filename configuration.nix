@@ -20,11 +20,11 @@ in {
 		it might fall back to a default one which needs to be removed manually
 		since hm can't overwrite it anymore at that point
 		*/
-		# redundant rn
 		compositor = "hyprland";
 
-		shell = "nushell";
+		shell = "zsh";
 		lock-app = "hyprlock";
+		terminal = "kitty";
 	};
 
 	home-manager.useGlobalPkgs = true;
@@ -61,6 +61,7 @@ in {
 				})
 
 			alsa-utils
+			anki
 			aseprite
 			btop
 			(discord.override {
@@ -269,6 +270,7 @@ in {
 		gvfs
 		libnotify
 		mpd-mpris
+		mpv
 		nixd
 		nodejs
 		openssl

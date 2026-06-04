@@ -15,4 +15,10 @@ in {
 			aiBandBlocker
 		];
 	};
+
+	xdg.configFile."spotify-flags.conf".text = ''
+		--enable-features=UseOzonePlatform
+		--ozone-platform=wayland
+		--enable-wayland-ime
+	'';
 }

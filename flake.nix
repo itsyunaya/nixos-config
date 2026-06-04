@@ -4,12 +4,13 @@
 	inputs = {
     	nixpkgs.url = "github:nixos/nixpkgs?ref=nixos-unstable";
 
+		# https://github.com/nix-community/home-manager
 		home-manager = {
 			url = "github:nix-community/home-manager";
 			inputs.nixpkgs.follows = "nixpkgs";
 		};
 
-		# https://github.com/an-anime-team/anime-games-launcher
+		# https://github.com/an-anime-team/an-anime-game-launcher
 		aagl = {
 			url = "github:ezKEa/aagl-gtk-on-nix";
 			inputs.nixpkgs.follows = "nixpkgs";
@@ -34,10 +35,10 @@
         hyprland.url = "github:hyprwm/Hyprland";
 
         # https://github.com/mangowm/mango
-        #mangowm = {
-        #	url = "github:mangowm/mango";
-        #	inputs.nixpkgs.follows = "nixpkgs";
-        #};
+        mangowm = {
+        	url = "github:mangowm/mango";
+        	inputs.nixpkgs.follows = "nixpkgs";
+        };
 
 		# https://github.com/niri-wm/niri
 		#niri = {
@@ -46,10 +47,7 @@
 		#};
 
 		# https://github.com/nix-community/nixvim
-		nixvim = {
-			url = "github:nix-community/nixvim";
-			inputs.nixpkgs.follows = "nixpkgs";
-		};
+		nixvim.url = "github:nix-community/nixvim";
 
         # https://github.com/Gerg-L/spicetify-nix/
         spicetify-nix = {
@@ -67,7 +65,7 @@
 		};
 	};
 
-	outputs = inputs @ { self, nixpkgs, home-manager, aagl, alejandra, nixvim, spicetify-nix, xwl-notifier, ... }:
+	outputs = inputs @ { self, nixpkgs, home-manager, aagl, alejandra, mangowm, nixvim, spicetify-nix, xwl-notifier, ... }:
 	let
 		system = "x86_64-linux";
 	in {
@@ -94,11 +92,13 @@
 
 				home-manager.nixosModules.home-manager
 				aagl.nixosModules.default
+				mangowm.nixosModules.mango
 
 				{
                 	home-manager.sharedModules = [
 						spicetify-nix.homeManagerModules.spicetify
 						nixvim.homeModules.nixvim
+						mangowm.hmModules.mango
 					];
 				}
 			];

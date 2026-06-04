@@ -1,4 +1,4 @@
-{ ... }:
+{ osConfig, ... }:
 
 {
 	programs.waybar = {
@@ -16,16 +16,24 @@
 
 				modules-left = [
 					"custom/launcher"
-					"hyprland/workspaces"
+				] ++ (
+					if (osConfig.itsyunaya-nix.compositor == "hyprland") then ["hyprland/workspaces"]
+					else if (osConfig.itsyunaya-nix.compositor == "mango") then ["ext/workspaces"]
+					else []
+				)
+				++ [
 					"custom/playerctl"
 					"custom/playerlabel"
 				];
 
-				modules-center = ["hyprland/window"];
+				modules-center =
+					if (osConfig.itsyunaya-nix.compositor == "hyprland") then ["hyprland/window"]
+					else if (osConfig.itsyunaya-nix.compositor == "mango") then ["dwl/window"]
+					else [];
 
 				modules-right = [
 					"tray"
-					"custom/hyprpicker"
+					"custom/colourpicker"
 					"bluetooth"
 					"cpu"
 					"memory"
@@ -45,6 +53,10 @@
 					max-length = 120;
 				};
 
+				"dwl/window" = {
+					max-length = 120;
+				};
+
 				"hyprland/workspaces" = {
 					active-only = false;
 					all-outputs = true;
@@ -59,6 +71,10 @@
 						default = "󰧞";
 					};
 					sort-by-number = true;
+				};
+
+				"ext/workspaces" = {
+					on-click = "activate";
 				};
 
 				"custom/playerctl" = {
@@ -148,7 +164,7 @@
 					on-click-right = "bash $HOME/.config/waybar/run.sh kitty";
 				};
 
-				"custom/hyprpicker" = {
+				"custom/colourpicker" = {
 					format = "󰈋";
 					on-click = "hyprpicker -a -f hex";
 					on-click-right = "hyprpicker -a -f rgb";
