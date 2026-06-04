@@ -4,6 +4,12 @@
 	theme,
 	...
 }: {
+	/*
+		list of things that need to be resolved before mango is stable for me:
+			-	crash with kitty fixed (https://github.com/mangowm/mango/issues/789)
+			-	screen sharing fixed (unknown issue)
+	*/
+
 	config =
 		lib.mkIf (osConfig.itsyunaya-nix.compositor == "mango") {
 			wayland.windowManager.mango = {
