@@ -289,6 +289,7 @@ in {
 		qt5.qtwayland
 		rustup
 		samba
+		statix
 		thunar
 		thunar-media-tags-plugin
 		thunar-shares-plugin
