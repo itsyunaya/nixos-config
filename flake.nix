@@ -161,6 +161,11 @@
 			system = "aarch64-linux";
 			specialArgs = { inherit inputs self; };
 
+			#pkgs = import nixpkgs {
+			#	localSystem = "x86_64-linux";
+			#	crossSystem = "aarch64-linux";
+			#};
+
 			modules = [
 				./hosts/ceres/configuration.nix
 				./hosts/ceres/hardware-configuration.nix

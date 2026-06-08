@@ -214,7 +214,13 @@ in {
 		loader.systemd-boot.enable = true;
 		loader.efi.canTouchEfiVariables = true;
 		kernelPackages = pkgs.linuxPackages_latest;
+
+		# needed so i can crosscompile rebuilds for ceres since
+		# otherwise it will be awfully slow
+		binfmt.emulatedSystems = [ "aarch64-linux" ];
 	};
+
+	nix.settings.secret-key-files = [ "/etc/nix/signing-key.sec" ];
 
 	networking = {
 		hostName = "nixos";

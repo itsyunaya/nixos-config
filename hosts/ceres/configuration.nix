@@ -1,6 +1,24 @@
-{ pkgs, ... }: {
-	boot.loader.grub.enable = false;
-	boot.loader.generic-extlinux-compatible.enable = true;
+{ lib, pkgs, ... }: {
+
+	boot = {
+		loader.grub.enable = false;
+		loader.generic-extlinux-compatible.enable = true;
+		kernelPatches = [
+			{
+				name = "disable-amdgpu";
+				patch = null;
+				extraStructuredConfig = {
+					DRM_AMDGPU = lib.kernel.no;
+					DRM_XE = lib.kernel.no;
+				};
+			}
+		];
+	};
+
+	nix = {
+		optimise.automatic = true;
+		settings.trusted-public-keys = [ "builder:xCiGECTBIjYH0BqPn4ihN+e2Iqt25+prQGOt+lXXqkg=" ];
+	};
 
 	networking.hostName = "ceres";
 	networking.networkmanager.enable = true;
@@ -17,6 +35,7 @@
 	};
 
 	environment.systemPackages = with pkgs; [
+		kitty.terminfo
 		vim
 		wget
 	];
@@ -50,7 +69,7 @@
 
 		pihole-web = {
 			enable = true;
-			ports = [ "443s" ];
+			ports = [ "80" ];
 		};
 	};
 
