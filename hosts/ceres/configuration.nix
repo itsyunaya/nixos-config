@@ -17,7 +17,10 @@
 
 	nix = {
 		optimise.automatic = true;
-		settings.trusted-public-keys = [ "builder:xCiGECTBIjYH0BqPn4ihN+e2Iqt25+prQGOt+lXXqkg=" ];
+		settings = { 
+			trusted-public-keys = [ "builder:xCiGECTBIjYH0BqPn4ihN+e2Iqt25+prQGOt+lXXqkg=" ];
+			experimental-features = [ "nix-command" "flakes" ];
+		};
 	};
 
 	networking = {
@@ -47,6 +50,13 @@
 		vim
 		wget
 	];
+
+	programs = {
+		gnupg.agent = {
+			enable = true;
+			pinentryPackage = pkgs.pinentry-tty;
+		};
+	};
 
 	security.sudo.extraConfig = ''
     	Defaults env_reset,pwfeedback
