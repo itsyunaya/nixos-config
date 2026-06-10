@@ -18,7 +18,7 @@ getting acquainted with Nix, but now actually stable and usable as a daily drive
 | `juno`                | Main x86 Linux machine                           |
 | `ceres`               | Raspberry Pi nixOS setup for pi-hole             |
 | `callisto`            | WIP server configuration                         |
-| `ashleys-MacBook-Pro` | Apple silicon Mac configuration using nix-darwin |
+| `ashleys-macbook-pro` | Apple silicon Mac configuration using nix-darwin |
 
 ### juno
 
@@ -45,7 +45,7 @@ but not limited to:
 - Various Webservers
 - Discord Bot Hosting
 
-### ashleys-MacBook-Pro
+### ashleys-macbook-pro
 
 Minimal nix-darwin configuration with home-manager. Only has some basic packages and a simple
 shell setup for now.

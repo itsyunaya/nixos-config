@@ -14,7 +14,7 @@ in {
 
 	home-manager.users.${username} = { pkgs, ... }: {
 		imports = [
-			(tree "${self}/modules/ashleys-MacBook-Pro")
+			(tree "${self}/modules/ashleys-macbook-pro")
 			(tree "${self}/modules/shared")
 		];
 

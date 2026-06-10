@@ -52,12 +52,6 @@
 			inputs.nixpkgs.follows = "nixpkgs";
 		};
 
-		# https://github.com/niri-wm/niri
-		#niri = {
-		#	url = "github:sodiboo/niri-flake";
-		#	inputs.nixpkgs.follows = "nixpkgs";
-		#};
-
 		# https://github.com/nix-community/nixvim
 		nixvim.url = "github:nix-community/nixvim";
 
@@ -126,12 +120,12 @@
 			];
 		};
 
-		darwinConfigurations.ashleys-MacBook-Pro = nix-darwin.lib.darwinSystem {
+		darwinConfigurations.ashleys-macbook-pro = nix-darwin.lib.darwinSystem {
 			system = "aarch64-darwin";
 			specialArgs = { inherit inputs self; };
 
 			modules = [
-				./hosts/ashleys-MacBook-Pro/configuration.nix
+				./hosts/ashleys-macbook-pro/configuration.nix
 
 				{
 					nixpkgs.overlays = [
