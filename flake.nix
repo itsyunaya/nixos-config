@@ -147,8 +147,7 @@
 			];
 		};
 
-		/*
-		  nixosConfiguration.callisto = nixpkgs.lib.nixosSystem {
+		nixosConfiguration.callisto = nixpkgs.lib.nixosSystem {
 			system = "x86_64-linux";
 			specialArgs = { inherit inputs self; };
 
@@ -157,7 +156,6 @@
 				./hosts/callisto/hardware-configuration.nix
 			];
 		};
-		*/
 
 		nixosConfigurations.ceres = nixpkgs.lib.nixosSystem {
 			system = "aarch64-linux";
