@@ -147,7 +147,7 @@
 			];
 		};
 
-		nixosConfiguration.callisto = nixpkgs.lib.nixosSystem {
+		nixosConfigurations.callisto = nixpkgs.lib.nixosSystem {
 			system = "x86_64-linux";
 			specialArgs = { inherit inputs self; };
 
