@@ -27,11 +27,5 @@
 				description = "If omz/omp should be enabled";
 			};
 		};
-
-		terminal = lib.mkOption {
-			type = lib.types.enum [ "kitty" "ghostty" ];
-			default = "kitty";
-			description = "Which terminal emulator to use";
-		};
 	};
 }

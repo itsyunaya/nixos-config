@@ -65,7 +65,6 @@ in {
 			qbittorrent
 			rmpc
 			ripgrep
-			steam
 			telegram-desktop
 			vesktop
 			xlsclients

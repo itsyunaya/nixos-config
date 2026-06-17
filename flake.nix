@@ -101,7 +101,6 @@
 
 			modules = [
 				./hosts/juno/configuration.nix
-				./hosts/juno/hardware-configuration.nix
 				./hosts/juno/options.nix
 
 				{
