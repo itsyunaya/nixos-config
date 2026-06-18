@@ -149,7 +149,6 @@
 
 			modules = [
 				./hosts/callisto/configuration.nix
-				./hosts/callisto/hardware-configuration.nix
 			];
 		};
 
@@ -165,7 +164,7 @@
 			];
 		};
 
-		nixosConfiguration."io" = nixpkgs.lib.nixosSystem {
+		nixosConfigurations."io" = nixpkgs.lib.nixosSystem {
 			system = "x86_64-linux";
 			specialArgs = { inherit inputs self; };
 
