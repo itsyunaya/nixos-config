@@ -4,6 +4,7 @@ for i = 0, 9 do
 	local key = tostring(i)
 
 	hl.bind("SUPER + " .. key, hl.dsp.focus({ workspace = ws_id }))
+	hl.bind("SUPER + SHIFT + " .. key, hl.dsp.window.move({ workspace = ws_id }))
 end
 
 hl.bind("SUPER + Q", hl.dsp.exec_cmd("kitty", { float = true, size = { 1000, 510 } }))
