@@ -2,12 +2,12 @@
 # since i dont need most of what it offers
 { lib, ... }: let
 	inherit (lib) hasInfix hasSuffix;
-	inherit (builtins) filter isString;
+	inherit (builtins) filter;
 in
 	dir: let
 		dirPath =
-			if isString dir
-			then builtins.toPath dir
+			if builtins.isAttrs dir && dir ? outPath
+			then dir.outPath
 			else dir;
 
 		files = filter
