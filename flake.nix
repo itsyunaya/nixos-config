@@ -164,7 +164,7 @@
 			];
 		};
 
-		nixosConfigurations."io" = nixpkgs.lib.nixosSystem {
+/*		nixosConfigurations."io" = nixpkgs.lib.nixosSystem {
 			system = "x86_64-linux";
 			specialArgs = { inherit inputs self; };
 
@@ -172,6 +172,6 @@
 				./hosts/io/configuration.nix
                 ./hosts/io/hardware-configuration.nix
 			];
-		};
+		};*/
 	};
 }

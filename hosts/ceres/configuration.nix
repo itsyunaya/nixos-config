@@ -1,5 +1,4 @@
 { lib, pkgs, ... }: {
-
 	boot = {
 		loader.grub.enable = false;
 		loader.generic-extlinux-compatible.enable = true;
@@ -17,10 +16,7 @@
 
 	nix = {
 		optimise.automatic = true;
-		settings = { 
-			trusted-public-keys = [ "builder:xCiGECTBIjYH0BqPn4ihN+e2Iqt25+prQGOt+lXXqkg=" ];
-			experimental-features = [ "nix-command" "flakes" ];
-		};
+		settings.experimental-features = [ "nix-command" "flakes" ];
 	};
 
 	networking = {
@@ -51,16 +47,14 @@
 		wget
 	];
 
-	programs = {
-		gnupg.agent = {
-			enable = true;
-			pinentryPackage = pkgs.pinentry-tty;
-		};
+	programs.gnupg.agent = {
+		enable = true;
+		pinentryPackage = pkgs.pinentry-tty;
 	};
 
 	security.sudo.extraConfig = ''
     	Defaults env_reset,pwfeedback
-  	'';
+	'';
 
 	services = {
 		openssh = {
