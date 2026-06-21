@@ -52,35 +52,37 @@ in {
 			else pkgs.nushell;
 	};
 
-	environment.systemPackages = builtins.attrValues {
-		inherit
-			(pkgs)
-			apfs-fuse
-			cifs-utils
-			wget
-			whitesur-cursors
-			whitesur-icon-theme
-			;
+	environment = {
+		systemPackages = builtins.attrValues {
+			inherit
+				(pkgs)
+				apfs-fuse
+				cifs-utils
+				wget
+				whitesur-cursors
+				whitesur-icon-theme
+				;
 
-		qt6-qtwayland = pkgs.qt6.qtwayland;
-		qt5-qtwayland = pkgs.qt5.qtwayland;
+			qt6-qtwayland = pkgs.qt6.qtwayland;
+			qt5-qtwayland = pkgs.qt5.qtwayland;
 
-		qtsvg6 = pkgs.kdePackages.qtsvg;
-		qtsvg5 = pkgs.qt5.qtsvg;
+			qtsvg6 = pkgs.kdePackages.qtsvg;
+			qtsvg5 = pkgs.qt5.qtsvg;
+		};
+
+		sessionVariables = {
+			QT_IM_MODULE = "fcitx";
+			XMODIFIERS = "@im=fcitx";
+			SDL_IM_MODULE = "fcitx";
+			GLFW_IM_MODULE = "ibus";
+			QT_QPA_PLATFORM = "wayland";
+			NIXOS_OZONE_WL = "1";
+		};
+
+		# needed so dolphin works nicely with mime types
+		# kde software is so evil sometimes :(
+		etc."xdg/menus/applications.menu".source = "${pkgs.kdePackages.plasma-workspace}/etc/xdg/menus/plasma-applications.menu";
 	};
-
-	environment.sessionVariables = {
-		QT_IM_MODULE = "fcitx";
-		XMODIFIERS = "@im=fcitx";
-		SDL_IM_MODULE = "fcitx";
-		GLFW_IM_MODULE = "ibus";
-		QT_QPA_PLATFORM = "wayland";
-		NIXOS_OZONE_WL = "1";
-	};
-
-	# needed so dolphin works nicely with mime types
-	# kde software is so evil sometimes :(
-	environment.etc."xdg/menus/applications.menu".source = "${pkgs.kdePackages.plasma-workspace}/etc/xdg/menus/plasma-applications.menu";
 
 	# state version should only be changed when it is really necessary,
 	# as it can cause system breakage. for more info see
