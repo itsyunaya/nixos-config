@@ -1,6 +1,4 @@
-{ lib, ... }:
-
-{
+{ lib, ... }: {
 	xdg.configFile."rmpc/config.ron" = lib.mkForce {
 		source = ./config.ron;
 		force = true;

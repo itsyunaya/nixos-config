@@ -50,7 +50,7 @@
 
 	# qtengine iconTheme does not work so i have to use this instead :c
 	environment.etc."xdg/kdeglobals".text = ''
-    		[Icons]
-    		Theme=WhiteSur-dark
-  '';
+    	[Icons]
+    	Theme=WhiteSur-dark
+  	'';
 }

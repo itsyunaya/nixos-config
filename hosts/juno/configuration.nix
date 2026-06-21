@@ -60,7 +60,6 @@ in {
 			cifs-utils
 			darkly
 			devenv
-			docker-compose
 			ffmpeg
 			ffmpegthumbnailer
 			gcc
@@ -77,11 +76,9 @@ in {
 			pnpm
 			qimgv
 			rustup
-			samba
 			statix
 			unrar
 			unzip
-			vim
 			wget
 			whitesur-cursors
 			whitesur-icon-theme
@@ -118,6 +115,10 @@ in {
 		QT_QPA_PLATFORM = "wayland";
 		NIXOS_OZONE_WL = "1";
 	};
+
+	# needed so dolphin works nicely with mime types
+	# kde software is so evil sometimes :(
+	environment.etc."xdg/menus/applications.menu".source = "${pkgs.kdePackages.plasma-workspace}/etc/xdg/menus/plasma-applications.menu";
 
 	# state version should only be changed when it is really necessary,
 	# as it can cause system breakage. for more info see

@@ -45,7 +45,7 @@
 
 		bluetooth = {
 			enable = true;
-			powerOnBoot = true;
+			powerOnBoot = false;
 			settings.General = {
 				Experimental = true;
 				FastConnectable = true;

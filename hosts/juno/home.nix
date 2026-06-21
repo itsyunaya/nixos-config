@@ -58,6 +58,7 @@ in {
 			keepassxc
 			mpdas
 			nicotine-plus
+			obsidian
 			pavucontrol
 			picard
 			qbittorrent

@@ -1,34 +1,32 @@
-{ osConfig, ... }:
-
-let
+{ osConfig, ... }: let
 	shell = osConfig.juno-cfg.sh.shell;
 in {
 	programs = {
 		eza = {
-        	enable = shell == "zsh";
+			enable = shell == "zsh";
+			enableZshIntegration = shell == "zsh";
+		};
 
-        	enableZshIntegration = shell == "zsh";
-        	#enableNushellIntegration = shell == "nushell";
-        };
+		yazi = {
+			enable = true;
+			shellWrapperName = "y";
 
-        yazi = {
-        	enable = true;
-        	shellWrapperName = "y";
+			enableZshIntegration = shell == "zsh";
+			enableNushellIntegration = shell == "nushell";
+		};
 
-        	enableZshIntegration = shell == "zsh";
-        	enableNushellIntegration = shell == "nushell";
-        };
+		direnv = {
+			enable = true;
 
-        direnv = {
-        	enable = true;
-
-        	enableZshIntegration = shell == "zsh";
+			enableZshIntegration = shell == "zsh";
 			enableNushellIntegration = shell == "nushell";
 
-        	nix-direnv.enable = true;
-        	/*stdlib = builtins.readFile (pkgs.runCommand "devenv-direnvrc" {} ''
-        		${pkgs.devenv}/bin/devenv direnvrc > $out
-        	'');*/
-        };
+			nix-direnv.enable = true;
+			/*
+			  stdlib = builtins.readFile (pkgs.runCommand "devenv-direnvrc" {} ''
+				${pkgs.devenv}/bin/devenv direnvrc > $out
+			'');
+			*/
+		};
 	};
 }
