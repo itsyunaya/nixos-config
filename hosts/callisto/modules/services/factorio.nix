@@ -13,7 +13,7 @@
 		# TODO: secrets management
 		game-password = "meow";
 
-		mods = let
+		/*mods = let
 			modDir = /home/callisto/factorio-mods;
 
 			modList = lib.pipe modDir [
@@ -36,6 +36,6 @@
 				''
 				// { deps = []; };
 		in
-			map modToDrv modList;
+			map modToDrv modList;*/
 	};
 }
