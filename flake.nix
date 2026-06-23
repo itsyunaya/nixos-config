@@ -28,6 +28,13 @@
 			inputs.nixpkgs.follows = "nixpkgs";
 		};
 
+		# https://github.com/ryantm/agenix
+		agenix = {
+			url = "github:ryantm/agenix";
+			inputs.nixpkgs.follows = "nixpkgs";
+			inputs.darwin.follows = "";
+		};
+
 		# https://github.com/itsyunaya/alejandra-opinionated
 		alejandra = {
 			url = "github:itsyunaya/alejandra-opinionated";
@@ -109,9 +116,10 @@
 					];
 				}
 
-				home-manager.nixosModules.home-manager
 				aagl.nixosModules.default
+				home-manager.nixosModules.home-manager
 				mangowm.nixosModules.mango
+				nixos-hardware.nixosModules.msi-b550-a-pro
 				qtengine.nixosModules.default
 
 				{
@@ -141,11 +149,11 @@
 
 				home-manager.darwinModules.home-manager
 
-        {
-          home-manager.sharedModules = [
-            inputs.spicetify-nix.homeManagerModules.default
-          ];
-        }
+				{
+					home-manager.sharedModules = [
+						inputs.spicetify-nix.homeManagerModules.default
+					];
+				}
 			];
 		};
 
