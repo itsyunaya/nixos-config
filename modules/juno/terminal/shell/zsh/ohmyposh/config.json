@@ -9,8 +9,7 @@
 					"foreground": "#FFFFFF",
 					"leading_diamond": "\ue0b6",
 					"style": "diamond",
-					"properties": {
-						"fedora": "\uF30a FEDR",
+					"options": {
 						"nixos": "\uF313 NIXS"
 					},
 					"template": "<b>\udb82\udee2  {{ .UserName }} </b>",
@@ -26,7 +25,7 @@
 						"{{ if gt .Code 0 }}#FFFFFF{{ end }}"
 					],
 					"leading_diamond": "\ue0b2",
-					"properties": {
+					"options": {
 						"always_enabled": true
 					},
 					"style": "diamond",
@@ -37,78 +36,22 @@
 				{
 					"background": "#575656",
 					"foreground": "#FFFFFF",
-					"properties": {
+					"options": {
 						"style": "roundrock",
 						"threshold": 0
 					},
 					"style": "diamond",
 					"template": " \uf252 {{ .FormattedMs }}",
-					"trailing_diamond": "\ue0b0",
+					"trailing_diamond": "\ue0b4",
 					"type": "executiontime"
 				},
 				{
 					"background": "#F46C6B",
 					"foreground": "#000000",
-					"powerline_symbol": "\ue0b0",
+					"powerline_symbol": "\ue0b4",
 					"style": "powerline",
 					"template": "<b> \uf09c root </b>",
 					"type": "root"
-				},
-				{
-					"type": "cmake",
-					"style": "powerline",
-					"powerline_symbol": "\ue0b0",
-					"foreground": "#E8EAEE",
-					"background": "#1E9748",
-					"template": " \ue61e \ue61d cmake {{ .Full }} "
-				},
-				{
-					"type": "python",
-					"style": "powerline",
-					"powerline_symbol": "\ue0b0",
-					"properties": {
-						"display_mode": "context"
-					},
-					"foreground": "#000000",
-					"foreground_templates": [
-						"{{ if .Venv }}#FFFFFF{{ end }}"
-					],
-					"background": "#EBFF3B",
-					"background_templates": [
-						"{{ if .Venv}}#356C9C{{ end }}"
-					],
-					"template": " <b>\ue73c {{ if .Venv }}{{ .Venv }} {{ end }}{{ .Full }}</b> "
-				},
-				{
-					"type": "go",
-					"style": "powerline",
-					"powerline_symbol": "\ue0b0",
-					"foreground": "#000000",
-					"background": "#7FD5EA",
-					"template": " \u202d\ue626 {{ .Full }} "
-				},
-				{
-					"type": "rust",
-					"style": "powerline",
-					"powerline_symbol": "\ue0b0",
-					"foreground": "#e2f3ff",
-					"background": "#684e3d",
-					"template": " \ue7a8 {{ .Full }} "
-				},
-				{
-					"background": "#D53010",
-					"foreground": "#FFFFFF",
-					"powerline_symbol": "\ue0b0",
-					"properties": {
-						"branch_icon": " ",
-						"fetch_stash_count": true,
-						"fetch_status": true,
-						"fetch_upstream_icon": true,
-						"fetch_worktree_count": true
-					},
-					"style": "powerline",
-					"template": "<b> {{ .UpstreamIcon }}{{ .HEAD }}{{if .BranchStatus }} {{ .BranchStatus }}{{ end }}{{ if .Working.Changed }} \uf044 {{ .Working.String }}{{ end }}{{ if and (.Working.Changed) (.Staging.Changed) }} |{{ end }}{{ if .Staging.Changed }}<#CAEBE1> \uf046 {{ .Staging.String }}</>{{ end }}{{ if gt .StashCount 0 }} \ueb4b {{ .StashCount }}{{ end }} </b>",
-					"type": "git"
 				}
 			],
 			"type": "prompt"
@@ -126,7 +69,7 @@
 				},
 				{
 					"leading_diamond": "",
-					"properties": {
+					"options": {
 						"folder_icon": " \uf07c ",
 						"folder_separator_icon": " <#D6DEEB>\uf061</> ",
 						"home_icon": "\uf015 ",
@@ -134,22 +77,10 @@
 						"max_depth": 4,
 						"right_format": "<u><b>%s</b></u>",
 						"mapped_locations": {
-							"~/videos": "\uf015 <#D6DEEB>\uf061</> \uf03d",
-							"~/desktop": "\uf015 <#D6DEEB>\uf061</> \uf108",
-							"~/documents": "\uf015 <#D6DEEB>\uf061</> \udb80\ude19",
-							"~/downloads": "\uf015 <#D6DEEB>\uf061</> \uf019",
-							"~/pictures": "\uf015 <#D6DEEB>\uf061</> \uf03e",
-							"~/music": "\uf015 <#D6DEEB>\uf061</> \uf001",
-							"~/git": "\uf015 <#D6DEEB>\uf061</> \ue702",
-							"~/public": "\uf015 <#D6DEEB>\uf061</> \uf0c0",
-							"~/templates": "\uf015 <#D6DEEB>\uf061</> \uf509",
-							"~/wine": "\uf015 <#D6DEEB>\uf061</> \uedae",
-							"~/workdir": "\uf015 <#D6DEEB>\uf061</> \uedc8 ",
 							"~/.config": "\uf015 <#D6DEEB>\uf061</> \udb84\udc7f",
 							"~/.local": "\uf015 <#D6DEEB>\uf061</> \udb86\uddfc",
 							"~/.steam": "\uf015 <#D6DEEB>\uf061</> \ued29",
-							"~/.cache": "\uf015 <#D6DEEB>\uf061</> \udb82\udeba",
-							"~/games": "\uf015 <#D6DEEB>\uf061</> \uf11b "
+							"~/.cache": "\uf015 <#D6DEEB>\uf061</> \udb82\udeba"
 						}
 					},
 					"style": "diamond",
@@ -170,7 +101,7 @@
 				},
 				{
 					"foreground": "#D6DEEB",
-					"properties": {
+					"options": {
 						"always_enabled": true
 					},
 					"style": "plain",
