@@ -152,6 +152,7 @@
 						(final: prev: {
 								alejandra = alejandra.packages.${prev.stdenv.hostPlatform.system}.default;
 							})
+						musicpresence.overlays.default
 					];
 				}
 

@@ -6,13 +6,13 @@ in {
 		home = /Users/${username};
 	};
 
-  nixpkgs.config.allowUnfree = true;
+	nixpkgs.config.allowUnfree = true;
 
 	home-manager = {
 		useGlobalPkgs = true;
 		useUserPackages = true;
 		backupFileExtension = "bak";
-    extraSpecialArgs = { inherit inputs; };
+		extraSpecialArgs = { inherit inputs; };
 	};
 
 	home-manager.users.${username} = { pkgs, ... }: {
@@ -27,6 +27,7 @@ in {
 				alejandra
 				gnupg
 				localsend
+				musicpresence
 				neovim
 				nixd
 				nodejs-slim
