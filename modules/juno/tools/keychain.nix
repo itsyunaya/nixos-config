@@ -1,10 +1,7 @@
-{ osConfig, ... }: let
-	shell = osConfig.juno-cfg.sh.shell;
-in {
+{ ... }: {
 	programs.keychain = {
 		enable = true;
-		enableZshIntegration = shell == "zsh";
-		enableNushellIntegration = shell == "nushell";
+		enableZshIntegration = true;
 
 		extraFlags = [ "--quiet" "--noask" ];
 		keys = [

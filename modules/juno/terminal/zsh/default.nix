@@ -2,7 +2,7 @@
 	sh = osConfig.juno-cfg.sh;
 in {
 	programs.zsh = {
-		enable = sh.shell == "zsh";
+		enable = true;
 
 		enableCompletion = true;
 		autosuggestion.enable = true;

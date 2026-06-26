@@ -1,6 +1,6 @@
-{ config, pkgs, self, ... }: {
+{ pkgs, self, ... }: {
 	programs = {
-		zsh.enable = config.juno-cfg.sh.shell == "zsh";
+		zsh.enable = true;
 
 		appimage.enable = true;
 		appimage.binfmt = true;

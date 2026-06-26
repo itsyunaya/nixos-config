@@ -1,32 +1,23 @@
-{ osConfig, ... }: let
-	shell = osConfig.juno-cfg.sh.shell;
-in {
+{ ... }: {
 	programs = {
 		eza = {
-			enable = shell == "zsh";
-			enableZshIntegration = shell == "zsh";
+			enable = true;
+			enableZshIntegration = true;
 		};
 
 		yazi = {
 			enable = true;
 			shellWrapperName = "y";
 
-			enableZshIntegration = shell == "zsh";
-			enableNushellIntegration = shell == "nushell";
+			enableZshIntegration = true;
 		};
 
 		direnv = {
 			enable = true;
 
-			enableZshIntegration = shell == "zsh";
-			enableNushellIntegration = shell == "nushell";
+			enableZshIntegration = true;
 
 			nix-direnv.enable = true;
-			/*
-			  stdlib = builtins.readFile (pkgs.runCommand "devenv-direnvrc" {} ''
-				${pkgs.devenv}/bin/devenv direnvrc > $out
-			'');
-			*/
 		};
 	};
 }

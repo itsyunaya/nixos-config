@@ -17,13 +17,9 @@ in {
 		# "mango" or "hyprland"
 		compositor = "hyprland";
 
-		sh = {
-			# "zsh" or "nushell"
-			shell = "zsh";
-			# this option enables/disables omz/omp if zsh is set as the active shell.
-			# can improve init times by a good margin
-			zshEnableExtraCustomization = true;
-		};
+		# this option enables/disables omz/omp,
+		# can improve init times by a good margin
+		sh.zshEnableExtraCustomization = true;
 
 		# "swaylock" or "hyprlock"
 		lock-app = "hyprlock";
@@ -46,10 +42,7 @@ in {
 		description = "${username}";
 		extraGroups = [ "networkmanager" "wheel" ];
 		packages = [];
-		shell =
-			if config.juno-cfg.sh.shell == "zsh"
-			then pkgs.zsh
-			else pkgs.nushell;
+		shell = pkgs.zsh;
 	};
 
 	environment = {

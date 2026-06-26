@@ -1,7 +1,7 @@
 { osConfig, lib, ... }: let
 	sh = osConfig.juno-cfg.sh;
 in {
-	programs.oh-my-posh = lib.mkIf (sh.shell == "zsh" && sh.zshEnableExtraCustomization) {
+	programs.oh-my-posh = lib.mkIf (sh.zshEnableExtraCustomization) {
 		enable = true;
 		enableZshIntegration = true;
 

@@ -15,12 +15,6 @@
 		};
 
 		sh = {
-			shell = lib.mkOption {
-				type = lib.types.enum [ "zsh" "nushell" ];
-				default = "zsh";
-				description = "Which shell to use";
-			};
-
 			zshEnableExtraCustomization = lib.mkOption {
 				type = lib.types.bool;
 				default = false;
