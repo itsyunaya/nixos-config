@@ -40,10 +40,10 @@ will take a very long time to complete.
 ### callisto
 
 Very work in progress server configuration including but not limited to:
-- Nix-Minecraft for multiple Minecraft servers
 - Nextcloud & Samba Servers for data management
+- Monitoring via Grafana
 - Various Webservers
-- Discord Bot Hosting
+- Gameservers
 
 ### ashleys-macbook-pro
 
@@ -52,7 +52,9 @@ simple shell setup for now.
 
 ## Other
 
-The `packages` directory includes sofware I've packaged myself.
+~~The packages directory includes sofware I've packaged myself.~~ 
+The only package I put there has been moved to 
+[its own flake](https://github.com/itsyunaya/musicpresence-flake).
 
 ## Note
 
