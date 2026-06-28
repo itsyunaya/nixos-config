@@ -63,7 +63,10 @@
         };
 
 		# https://github.com/nix-community/nixvim
-		nixvim.url = "github:nix-community/nixvim";
+		nixvim = {
+			url = "github:nix-community/nixvim";
+			inputs.nixpkgs.follows = "nixpkgs";
+		};
 
 		# https://github.com/kossLAN/qtengine
 		qtengine = {
@@ -133,8 +136,8 @@
 				{
 					home-manager.sharedModules = [
 						spicetify-nix.homeManagerModules.spicetify
-						nixvim.homeModules.nixvim
 						mangowm.hmModules.mango
+						nixvim.homeModules.nixvim
 					];
 				}
 			];
