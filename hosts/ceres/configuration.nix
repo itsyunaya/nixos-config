@@ -2,16 +2,6 @@
 	boot = {
 		loader.grub.enable = false;
 		loader.generic-extlinux-compatible.enable = true;
-		kernelPatches = [
-			{
-				name = "disable-amdgpu";
-				patch = null;
-				extraStructuredConfig = {
-					DRM_AMDGPU = lib.kernel.no;
-					DRM_XE = lib.kernel.no;
-				};
-			}
-		];
 	};
 
 	nix = {
