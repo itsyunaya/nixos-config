@@ -2,6 +2,9 @@
 	boot = {
 		loader.grub.enable = false;
 		loader.generic-extlinux-compatible.enable = true;
+
+		# fix for "Couldn't write '33' to 'vm/mmap_rnd_bits': Invalid argument"
+		kernel.sysctl."vm.mmap_rnd_bits" = 24;
 	};
 
 	nix = {

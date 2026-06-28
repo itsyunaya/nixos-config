@@ -186,7 +186,9 @@
 				./hosts/ceres/configuration.nix
 				./hosts/ceres/hardware-configuration.nix
 
-				nixos-hardware.nixosModules.raspberry-pi-4
+				# makes it so i have to recompile the kernel from source,
+				# reenabling once this is fixed
+				#nixos-hardware.nixosModules.raspberry-pi-4
 			];
 		};
 	};
