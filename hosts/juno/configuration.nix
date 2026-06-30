@@ -1,6 +1,6 @@
 { theme, inputs, pkgs, self, lib, ... }: let
 	username = "ashley";
-	recImport = import "${self}/functions/recursiveImport.nix";
+	recImport = import "${self}/functions/recursiveImport.nix" { inherit lib; };
 in {
 	nix.settings.experimental-features = [
 		"nix-command"
@@ -26,7 +26,7 @@ in {
 	};
 
 	imports = [
-		(recImport { inherit lib; } "${self}/hosts/juno/modules")
+		(recImport "${self}/hosts/juno/modules")
 	];
 
 	home-manager = {

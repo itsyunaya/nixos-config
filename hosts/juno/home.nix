@@ -1,9 +1,9 @@
 { self, pkgs, username, lib, ... }: let
-	recImport = import "${self}/functions/recursiveImport.nix";
+	recImport = import "${self}/functions/recursiveImport.nix" { inherit lib; };
 in {
 	imports = [
-		(recImport { inherit lib; } "${self}/modules/juno")
-		(recImport { inherit lib; } "${self}/modules/shared")
+		(recImport "${self}/modules/juno")
+		(recImport "${self}/modules/shared")
 	];
 
 	services.mpd = {

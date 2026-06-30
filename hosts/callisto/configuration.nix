@@ -1,5 +1,5 @@
 { inputs, lib, pkgs, self, ... }: let
-	recImport = import "${self}/functions/recursiveImport.nix";
+	recImport = import "${self}/functions/recursiveImport.nix" { inherit lib; };
 in {
 	nix.settings.experimental-features = [
     	"nix-command"
@@ -7,7 +7,7 @@ in {
     ];
 
     imports = [
-    	(recImport { inherit lib; } "${self}/hosts/callisto/modules")
+    	(recImport "${self}/hosts/callisto/modules")
 		./secrets
     ];
 

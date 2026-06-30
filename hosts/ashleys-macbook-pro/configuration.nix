@@ -1,6 +1,6 @@
 { inputs, lib, self, ... }: let
 	username = "ashley";
-	recImport = import "${self}/functions/recursiveImport.nix";
+	recImport = import "${self}/functions/recursiveImport.nix" { inherit lib; };
 in {
 	users.users.${username} = {
 		home = /Users/${username};
@@ -17,8 +17,8 @@ in {
 
 	home-manager.users.${username} = { pkgs, ... }: {
 		imports = [
-			(recImport { inherit lib; } "${self}/modules/ashleys-macbook-pro")
-			(recImport { inherit lib; } "${self}/modules/shared")
+			(recImport "${self}/modules/ashleys-macbook-pro")
+			(recImport "${self}/modules/shared")
 		];
 
 		home.packages = builtins.attrValues {
