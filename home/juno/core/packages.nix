@@ -1,4 +1,17 @@
-{ inputs, pkgs, ... }: {
+{ inputs, pkgs, ... }: let
+	discord = pkgs.discord.override {
+		withVencord = true;
+	};
+
+	prism = pkgs.prismlauncher.override {
+		# system glfw for running mc natively on wayland
+		# only works for some versions up to 26.x
+		additionalLibs = [ pkgs.glfw ];
+	};
+
+	awww = inputs.awww.packages.${pkgs.stdenv.hostPlatform.system}.awww;
+	zen = inputs.zen-browser.packages.${pkgs.stdenv.hostPlatform.system}.default;
+in {
 	home.packages = builtins.attrValues {
 		tex-custom = pkgs.texlive.combine {
 			inherit
@@ -20,18 +33,12 @@
 				;
 		};
 
-		discord = pkgs.discord.override {
-			withVencord = true;
-		};
-
-		prism = pkgs.prismlauncher.override {
-			# system glfw for running mc natively on wayland
-			# only works for some versions up to 26.x
-			additionalLibs = [ pkgs.glfw ];
-		};
-
-		awww = inputs.awww.packages.${pkgs.stdenv.hostPlatform.system}.awww;
-		zen = inputs.zen-browser.packages.${pkgs.stdenv.hostPlatform.system}.default;
+		inherit
+			discord
+			prism
+			awww
+			zen
+			;
 
 		inherit
 			(pkgs.jetbrains)
@@ -69,7 +76,7 @@
 			musicpresence
 			nh
 			nicotine-plus
-			nixd
+			nil
 			nodejs-slim
 			obsidian
 			openssl

@@ -2,8 +2,8 @@
 	recImport = import "${self}/functions/recursiveImport.nix" { inherit lib; };
 in {
 	imports = [
-		(recImport "${self}/modules/juno")
-		(recImport "${self}/modules/shared")
+		(recImport "${self}/home/juno")
+		(recImport "${self}/home/shared")
 	];
 
 	services.mpd = {

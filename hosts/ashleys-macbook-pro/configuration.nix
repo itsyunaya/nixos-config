@@ -17,8 +17,8 @@ in {
 
 	home-manager.users.${username} = { pkgs, ... }: {
 		imports = [
-			(recImport "${self}/modules/ashleys-macbook-pro")
-			(recImport "${self}/modules/shared")
+			(recImport "${self}/home/ashleys-macbook-pro")
+			(recImport "${self}/home/shared")
 		];
 
 		home.packages = builtins.attrValues {

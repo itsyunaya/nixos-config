@@ -57,10 +57,10 @@
 		};
 
 		# https://github.com/itsyunaya/musicpresence-flake
-        musicpresence = {
-        	url = "github:itsyunaya/musicpresence-flake";
-        	inputs.nixpkgs.follows = "nixpkgs";
-        };
+		musicpresence = {
+			url = "github:itsyunaya/musicpresence-flake";
+			inputs.nixpkgs.follows = "nixpkgs";
+		};
 
 		# https://github.com/nix-community/nixvim
 		nixvim = {
