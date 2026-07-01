@@ -45,6 +45,11 @@ hl.config({
 		force_default_wallpaper = 1,
 	},
 
+	ecosystem = {
+		no_update_news = true,
+		no_donation_nag = true,
+	},
+
 	animations = { enabled = true },
 	master = { new_status = "master", },
 	xwayland = { force_zero_scaling = true }
